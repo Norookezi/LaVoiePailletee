@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "es2016",                                /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+    "lib": ["dom", "es6"],
+    "jsx": "react-jsx",                                /* Use the new JSX transform for React 17 and later */
+    "module": "commonjs",                               /* Specify what module code is generated. */
+    "esModuleInterop": true,                             /* Enable compatibility for CommonJS modules. */
+    "forceConsistentCasingInFileNames": true,            /* Ensure correct casing in imports. */
+    "skipLibCheck": true,                                 /* Skip type checking for declaration files */
+    
+    /* Type Checking */
+    "strict": true,                                      /* Enable all strict type-checking options. */
+    
+    /* Modules */
+    "moduleResolution": "node",                          /* Use Node-style module resolution. */
+    "resolveJsonModule": true,                            /* Enable importing of JSON files. */
+
+    /* Emit */
+    "noEmit": true,                                      /* Disable emitting files (useful if you're only doing type-checking). */
+    "sourceMap": true,                                   /* Create sourcemaps for emitted JavaScript files. */
+    "removeComments": true,                               /* Remove comments in the emitted JavaScript. */
+    
+    /* JavaScript Support */
+    "allowJs": true,                                    /* Allow JavaScript files to be part of the program (if you still have .js files). */
+    "checkJs": false,                                    /* Disable error reporting in JavaScript files. */
+  },
+
+  /* Files and Directories */
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "build"
+  ]
+}
