@@ -4,7 +4,12 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        kony: ['"kony"', "sans-serif"],
+        // Add more custom font families as needed
+      },
+    },
   },
   plugins: [],
 }
