@@ -36,12 +36,15 @@ const HomePage: React.FC = () => {
         </section>
 
         {/* Partenaires Section */}
-        <section className='flex-1 bg-[#ef476f] py-10 text-white text-center mt-10 md:mt-16 flex flex-col justify-center items-center shadow-2xl'>
+        <section className='flex-1 bg-[#ef476f] py-10 text-white text-center mt-10 md:mt-16 flex flex-col justify-center shadow-2xl'>
           <div className="flex flex-col md:flex-col md:items-center md:justify-between md:mx-10">
-            <h2 className='text-3xl md:text-5xl font-bold mb-8 md:mb-12 md:mr-10 whitespace-normal md:whitespace-nowrap break-words'>
-              Nos partenaires
+            <h2 className='p-5 text-3xl md:text-5xl whitespace-normal text-center md:whitespace-nowrap break-all font-kony tracking-wide'>
+              Partenaires de 
+              <br />
+              l'évènement
             </h2>
-            <div className='flex flex-wrap justify-center sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5 gap-6 px-6 flex-1 min-w-0'>
+
+            <div className='flex flex-wrap justify-center sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5 gap-5 px-6 flex-1 min-w-0'>
               <ImageLink imageSize={20} link="https://eastgames.org/" imageSource="images/partenaires/east_games.webp" imageAlt="East Games" />
               <ImageLink imageSize={20} link="https://www.cybergrange.eu/" imageSource="images/partenaires/la_cybergrange.webp" imageAlt="La CyberGrange" />
               <ImageLink imageSize={20} link="https://www.getailicia.com/fr" imageSource="images/partenaires/ai_licia.webp" imageAlt="Ai Licia" />
