@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 @font-face {
-    font-family: 'kony';
-    src: local('kony'), url("/public/fonts/La-Kony-Black.ttf");
-  }
+  font-family: "kony";
+  src: local("kony"), url("/public/fonts/KoniBlack.ttf");
+}
+
+@font-face {
+  font-family: "roboto";
+  src: local("roboto"), url("/public/fonts/Roboto.ttf");
+}
