@@ -18,7 +18,7 @@ export default function ImageLink({ link, imageSource, imageAlt, imageSize }: Im
             <img 
                 src={imageSource}
                 alt={imageAlt}
-                className={`w-full h-full p-3 max-w-[120px] max-h-[120px] md:max-w-[132px] md:max-h-[132px] object-contain transition-opacity duration-300 group-hover:opacity-80`}
+                className={`w-full h-full p-3 max-w-[80px] max-h-[80px] md:max-w-[128px] md:max-h-[128px] object-contain transition-opacity duration-300 group-hover:opacity-80`}
             />
         </a>
     );
