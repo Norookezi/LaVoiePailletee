@@ -11,7 +11,7 @@ export default function Footer(): JSX.Element {
       </h1>
 
       {/* Socials icons */}
-      <div className="flex justify-center mt-2 space-x-3">
+      <div className="flex flex-wrap items-center justify-center space-x-0 space-y-0 mt-2">
         {/* Twitch Icon */}
         <IconLink link="https://twitch.tv/lavoiepailletee" icon={faTwitch} />
         {/* Instagram Icon */}
