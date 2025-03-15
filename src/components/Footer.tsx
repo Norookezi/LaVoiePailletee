@@ -13,17 +13,17 @@ export default function Footer(): JSX.Element {
       {/* Socials icons */}
       <div className="flex flex-wrap items-center justify-center space-x-0 space-y-0 mt-2">
         {/* Twitch Icon */}
-        <IconLink link="https://twitch.tv/lavoiepailletee" icon={faTwitch} />
+        <IconLink link="https://twitch.tv/lavoiepailletee" icon={faTwitch} hoverColor="#9146FF" />
         {/* Instagram Icon */}
-        <IconLink link="https://instagram.com/lavoiepailletee/" icon={faInstagram} />
+        <IconLink link="https://instagram.com/lavoiepailletee/" icon={faInstagram} hoverColor="#E1306C" />
         {/* X Icon */}
-        <IconLink link="https://x.com/LaVoiePailletee" icon={faXTwitter} />
+        <IconLink link="https://x.com/LaVoiePailletee" icon={faXTwitter} hoverColor="#171717" />
         {/* Threads Icon */}
-        <IconLink link="https://threads.net/@lavoiepailletee" icon={faThreads} />
+        <IconLink link="https://threads.net/@lavoiepailletee" icon={faThreads} hoverColor="#3C9EFC" />
         {/* Tiktok Icon */}
-        <IconLink link="https://tiktok.com/@lavoiepailletee" icon={faTiktok} />
+        <IconLink link="https://tiktok.com/@lavoiepailletee" icon={faTiktok} hoverColor="#D6004C" />
         {/* Youtube Icon */}
-        <IconLink link="https://youtube.com/@lavoiepailletee" icon={faYoutube} />
+        <IconLink link="https://youtube.com/@lavoiepailletee" icon={faYoutube} hoverColor="#FF0000" />
       </div>
 
       {/* Footer text */}
