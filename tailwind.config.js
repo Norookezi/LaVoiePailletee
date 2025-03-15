@@ -9,6 +9,10 @@ module.exports = {
         kony: ['"kony"', "sans-serif"],
         // Add more custom font families as needed
       },
+      colors: {
+        "mediumseagreen": "#06D79F",
+        "crimson": "#F04770"
+      }
     },
   },
   plugins: [],
