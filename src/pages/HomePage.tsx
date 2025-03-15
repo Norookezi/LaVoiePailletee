@@ -9,7 +9,7 @@ const HomePage: React.FC = () => {
         <Header />
 
         {/* First Section */}
-        <section className='flex-row-reverse items-center justify-between pt-16 mx-5 max-md:mb-10 md:flex'>
+        <section className='flex-row-reverse items-center justify-between pt-16 mx-5 max-md:mb-10 md:flex '>
           <div className='relative md:mx-[5vw] flex-1 self-stretch'>
             <h2 className='absolute block px-5 pt-2 text-center text-white -translate-y-1/2 shadow-lg md:pt-4 md:px-8 md:-translate-x-1/2 md:top-1/2 left-3 bg-mediumseagreen rounded-3xl whitespace-break-spaces font-kony'>
               <span className='block text-xl'>Le 6, 7 et 8 Juin</span>
@@ -36,7 +36,7 @@ const HomePage: React.FC = () => {
         </section>
 
         {/* Partenaires Section */}
-        <section className='flex-1 bg-[#ef476f] py-10 text-white text-center mt-10 md:mt-16 flex flex-col justify-center items-center'>
+        <section className='flex-1 bg-[#ef476f] py-10 text-white text-center mt-10 md:mt-16 flex flex-col justify-center items-center shadow-2xl'>
           <div className="flex flex-col md:flex-col md:items-center md:justify-between md:mx-10">
             <h2 className='text-3xl md:text-5xl font-bold mb-8 md:mb-12 md:mr-10 whitespace-normal md:whitespace-nowrap break-words'>
               Nos partenaires
