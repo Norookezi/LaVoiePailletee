@@ -42,12 +42,12 @@ const HomePage: React.FC = () => {
               Nos partenaires
             </h2>
             <div className='flex flex-wrap justify-center sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-5 gap-6 px-6 flex-1 min-w-0'>
-              <ImageLink imageSize={20} link="#" imageSource="images/partenaires/east_games.webp" imageAlt="partenaire 1" />
-              <ImageLink imageSize={20} link="#" imageSource="images/partenaires/la_cybergrange.webp" imageAlt="partenaire 2" />
-              <ImageLink imageSize={20} link="#" imageSource="images/partenaires/ai_licia.webp" imageAlt="partenaire 3" />
-              <ImageLink imageSize={20} link="#" imageSource="images/partenaires/skillcamp.webp" imageAlt="partenaire 4" />
-              <ImageLink imageSize={20} link="#" imageSource="images/partenaires/vent_divin.webp" imageAlt="partenaire 5" />
-              <ImageLink imageSize={20} link="#" imageSource="images/partenaires/le_shadock.webp" imageAlt="partenaire 6" />
+              <ImageLink imageSize={20} link="https://eastgames.org/" imageSource="images/partenaires/east_games.webp" imageAlt="East Games" />
+              <ImageLink imageSize={20} link="https://www.cybergrange.eu/" imageSource="images/partenaires/la_cybergrange.webp" imageAlt="La CyberGrange" />
+              <ImageLink imageSize={20} link="https://www.getailicia.com/fr" imageSource="images/partenaires/ai_licia.webp" imageAlt="Ai Licia" />
+              <ImageLink imageSize={20} link="https://www.skillcamp.gg/" imageSource="images/partenaires/skillcamp.webp" imageAlt="SkillCamp" />
+              <ImageLink imageSize={20} link="https://www.ventdivin.com/" imageSource="images/partenaires/vent_divin.webp" imageAlt="Vent Divin" />
+              <ImageLink imageSize={20} link="https://shadok-strasbourg.eu/" imageSource="images/partenaires/le_shadok.webp" imageAlt="Le Shadok" />
             </div>
           </div>
         </section>
