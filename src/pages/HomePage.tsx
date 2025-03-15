@@ -6,7 +6,7 @@ const HomePage: React.FC = () => {
   return (
     <main className='flex flex-col h-full min-h-screen'>
         <Header />
-        <section aria-description='Hero section' className='flex-row-reverse items-center justify-between pt-16 mx-5 max-md:mb-10 md:flex'>
+        <section className='flex-row-reverse items-center justify-between pt-16 mx-5 max-md:mb-10 md:flex'>
           <div className='relative md:mx-[5vw] flex-1 self-stretch'>
             <h2 className='absolute block px-5 pt-2 text-center text-white -translate-y-1/2 shadow-lg md:pt-4 md:px-8 md:-translate-x-1/2 md:top-1/2 left-3 bg-mediumseagreen rounded-3xl whitespace-break-spaces font-kony'>
               <span className='block text-xl'>Le 6, 7 et 8 Juin</span>
