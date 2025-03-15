@@ -13,9 +13,9 @@ export default function IconLink({ link, icon }: IconLinkProps): JSX.Element {
           href={link}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-white hover:scale-150 transition-transform duration-300"
+          className="text-white hover:scale-150 transition-transform duration-300 flex items-center justify-center w-12 h-12"
         >
-            <FontAwesomeIcon icon={icon} className="text-3xl md:text-4xl" />
+            <FontAwesomeIcon icon={icon} className="text-3xl md:text-4xl w-8 h-8" />
         </a>
     );
 };
