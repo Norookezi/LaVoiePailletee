@@ -13,7 +13,7 @@ export default function ImageLink({ link, imageSource, imageAlt, imageSize }: Im
           href={link}
           target="_blank" 
           rel="noopener noreferrer"
-          className={` group w-${imageSize} h-${imageSize} md:w-20 md:h-20 flex justify-center items-center bg-white bg-opacity-40 rounded-full shadow-md overflow-hidden transition-transform transform hover:scale-110`}
+          className={` group w-${imageSize} h-${imageSize} aspect-square md:w-20 md:h-20 flex justify-center items-center bg-white bg-opacity-40 rounded-full shadow-md overflow-hidden transition-transform transform hover:scale-110`}
         >
             <img 
                 src={imageSource}

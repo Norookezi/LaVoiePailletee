@@ -58,7 +58,7 @@ const HomePage: React.FC = () => {
             md:h-auto
             lg:h-auto lg:w-full
             ">
-            <h2 className="pb-4 text-3xl text-center uppercase break-all sm:text-4xl md:text-4xl lg:text-5xl md:text-left font-kony">
+            <h2 className="pb-4 text-3xl text-center uppercase break-words sm:text-4xl md:text-4xl lg:text-5xl md:text-left font-kony">
               L'intolérance <br/>brise des vies
             </h2>
             <p className="pt-4 pb-4 text-base text-center break-words sm:text-lg md:text-lg md:text-left font-roboto">
@@ -75,7 +75,7 @@ const HomePage: React.FC = () => {
         {/* Partenaires Section */}
         <section className='flex-1 bg-[#ef476f] py-10 text-white text-center flex flex-col justify-center shadow-2xl'>
           <div className="flex flex-col lg:flex-row md:items-center md:justify-evenly md:mx-10">
-            <h2 className='p-5 text-3xl tracking-wide text-center break-all whitespace-normal md:text-5xl md:whitespace-nowrap font-kony'>
+            <h2 className='p-5 text-3xl tracking-wide text-center break-words whitespace-normal md:text-5xl md:whitespace-nowrap font-kony'>
               <span>Partenaires de</span>
               <span className='ml-4 max-2xl:block'>l'évènement</span>
             </h2>
