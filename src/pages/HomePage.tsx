@@ -55,7 +55,9 @@ const HomePage: React.FC = () => {
             flex-1 
             bg-[#06d6a0] 
             text-white 
-            py-4 px-6 
+            py-16 px-16 
+            md:py-20 md:px-20
+            lg:py-32 lg:px-32
             flex flex-col 
             justify-start 
             mx-auto
@@ -64,7 +66,7 @@ const HomePage: React.FC = () => {
             md:h-auto
             lg:h-auto lg:w-full
             ">
-            <h2 className="text-3xl sm:text-4xl md:text-4xl pt-4 pb-4 lg:text-5xl text-center md:text-left font-kony uppercase break-all">
+            <h2 className="text-3xl sm:text-4xl md:text-4xl pb-4 lg:text-5xl text-center md:text-left font-kony uppercase break-all">
               L'intolérance <br/>brise des vies
             </h2>
             <p className="text-base sm:text-lg md:text-lg text-center pt-4 pb-4 md:text-left font-roboto break-all">
