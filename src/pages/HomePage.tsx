@@ -9,7 +9,7 @@ const HomePage: React.FC = () => {
         <Header />
 
         {/* First Section */}
-        <section className='flex-row-reverse items-center justify-between pt-16 mx-5 max-md:mb-10 md:flex '>
+        <section className='flex-row-reverse items-center justify-between pt-16 mx-5 max-md:mb-10 md:flex mb-10 md:mb-16'>
           <div className='relative md:mx-[5vw] flex-1 self-stretch'>
             <h2 className='absolute block px-5 pt-2 text-center text-white -translate-y-1/2 shadow-lg md:pt-4 md:px-8 md:-translate-x-1/2 md:top-1/2 left-3 bg-mediumseagreen rounded-3xl whitespace-break-spaces font-kony'>
               <span className='block text-xl'>Le 6, 7 et 8 Juin</span>
@@ -35,8 +35,51 @@ const HomePage: React.FC = () => {
           </div>
         </section>
 
+        {/* "Le refuge" Section */}
+        <section className="flex-1 flex flex-col md:flex-row items-stretch justify-between">
+          <div className="flex md:mb-0">
+            <img 
+              src="images/le_refuge.png" 
+              alt="Le refuge" 
+              className="
+                w-full h-auto 
+                sm:h-auto sm:w-full 
+                md:h-auto md:w-[30vw] 
+                lg:h-auto lg:w-[30vw] lg:h-[20vw] 
+                mx-auto object-cover object-top md:object-fill lg:object-cover
+                aspect-[4/3] md:aspect-auto" 
+            />
+          </div>
+
+          <div className="
+            flex-1 
+            bg-[#06d6a0] 
+            text-white 
+            py-4 px-6 
+            flex flex-col 
+            justify-start 
+            mx-auto
+            w-full h-auto
+            sm: h-auto
+            md:h-auto
+            lg:h-auto lg:w-full
+            ">
+            <h2 className="text-3xl sm:text-4xl md:text-4xl pt-4 pb-4 lg:text-5xl text-center md:text-left font-kony uppercase break-all">
+              L'intolérance <br/>brise des vies
+            </h2>
+            <p className="text-base sm:text-lg md:text-lg text-center pt-4 pb-4 md:text-left font-roboto break-all">
+              Le Refuge, c'est la fondation que nous allons soutenir grâce à vos donations. 
+              Depuis près de 20 ans, la Fondation Le Refuge agit pour briser l'isolement 
+              et le suicide des jeunes LGBTQI+, de 14 à 25 ans, victimes d'homophobie 
+              ou de transphobie et en situation de rupture familiale. 
+              Elle les héberge et les accompagne vers leur reconstruction émotionnelle 
+              et matérielle.
+            </p>
+          </div>
+        </section>
+
         {/* Partenaires Section */}
-        <section className='flex-1 bg-[#ef476f] py-10 text-white text-center mt-10 md:mt-16 flex flex-col justify-center shadow-2xl'>
+        <section className='flex-1 bg-[#ef476f] py-10 text-white text-center flex flex-col justify-center shadow-2xl'>
           <div className="flex flex-col md:flex-col md:items-center md:justify-between md:mx-10">
             <h2 className='p-5 text-3xl md:text-5xl whitespace-normal text-center md:whitespace-nowrap break-all font-kony tracking-wide'>
               Partenaires de 
