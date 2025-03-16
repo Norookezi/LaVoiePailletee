@@ -6,7 +6,6 @@ module.exports = {
       fontFamily: {
         kony: ['"kony"', "sans-serif"],
         roboto: ['"roboto"', "sans-serif"],
-        // Add more custom font families as needed
       },
       colors: {
         mediumseagreen: "#06D79F",

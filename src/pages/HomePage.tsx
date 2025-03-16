@@ -15,7 +15,7 @@ const HomePage: React.FC = () => {
               <span className='block text-xl'>Le 6, 7 et 8 Juin</span>
               <span className='block text-6xl'>2025</span>
             </h2>
-            <img src='images/gameuse.png' alt='' className='object-cover object-[60%_0%] w-full h-full' />
+            <img src='images/gameuse.webp' alt='' className='object-cover object-[60%_0%] w-full h-full' />
           </div>
           <div className='md:mx-[5vw] flex-1'>
             <h2 className='inline-block px-4 py-4 text-3xl text-center uppercase translate-x-5 bg-white shadow-lg md:bg-transparent mb:px-0 md:text-left md:shadow-none lg:text-6xl -translate-y-1/3 md:translate-y-0 md:translate-x-0 md:text-5xl rounded-xl whitespace-break-spaces font-kony text-crimson'>
@@ -39,29 +39,15 @@ const HomePage: React.FC = () => {
         <section className="flex flex-col items-stretch justify-between flex-1 md:flex-row">
           <div className="relative flex items-center justify-center flex-1 overflow-hidden md:mb-0 min-h-[50vh]">
             {/* Background image */}
-            <img src="/images/le_refuge_bg.png" alt="" className='absolute object-cover object-center w-full h-full -z-40' />
-            <img src="/images/le_refuge.png" alt="" className='w-auto p-5 max-w-[70vw] sm:max-w-[60vw] md:max-w-[35vw]' />
+            <img src="/images/le_refuge_bg.webp" alt="" className='absolute object-cover object-center w-full h-full -z-40' />
+            <img src="/images/le_refuge.webp" alt="" className='w-auto p-5 max-w-[70vw] sm:max-w-[60vw] md:max-w-[35vw]' />
           </div>
 
-          <div className="
-            flex-1 
-            bg-[#06d6a0] 
-            text-white 
-            py-16 px-16 
-            md:py-20 md:px-20
-            lg:py-32 lg:px-32
-            flex flex-col 
-            justify-start 
-            mx-auto
-            w-full h-auto
-            sm: h-auto
-            md:h-auto
-            lg:h-auto lg:w-full
-            ">
+          <div className="flex-col justify-start flex-1 px-16 py-16 text-white bg-mediumseagreen md:py-20 md:px-20lg:py-32 lg:px-32flex mx-autow-full h-autosm: h-automd:h-autolg:h-auto lg:w-full">
             <h2 className="pb-4 text-3xl text-center uppercase break-words sm:text-4xl md:text-4xl lg:text-5xl md:text-left font-kony">
               L'intolérance <br/>brise des vies
             </h2>
-            <p className="pt-4 pb-4 text-base text-center break-words sm:text-lg md:text-lg md:text-left font-roboto">
+            <p className="pt-4 pb-4 text-base text-center break-words bg sm:text-lg md:text-lg md:text-left font-roboto">
               Le Refuge, c'est la fondation que nous allons soutenir grâce à vos donations. 
               Depuis près de 20 ans, la Fondation Le Refuge agit pour briser l'isolement 
               et le suicide des jeunes LGBTQI+, de 14 à 25 ans, victimes d'homophobie 
@@ -73,7 +59,7 @@ const HomePage: React.FC = () => {
         </section>
 
         {/* Partenaires Section */}
-        <section className='flex-1 bg-[#ef476f] py-10 text-white text-center flex flex-col justify-center shadow-2xl'>
+        <section className='flex flex-col justify-center flex-1 py-10 text-center text-white shadow-2xl bg-crimson'>
           <div className="flex flex-col lg:flex-row md:items-center md:justify-evenly md:mx-10">
             <h2 className='p-5 text-3xl tracking-wide text-center break-words whitespace-normal md:text-5xl md:whitespace-nowrap font-kony'>
               <span>Partenaires de</span>
