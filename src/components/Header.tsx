@@ -5,7 +5,7 @@ const Header: React.FC = () => {
     <header className='relative overflow-clip'>
       <img
         className='absolute object-cover w-screen h-full -z-50'
-        src='images/degrade.jpg'
+        src='images/degrade.webp'
         alt=''
       />
       <div className='flex items-center justify-end w-screen px-5 pt-1 md:absolute md:top-1/2 md:-translate-y-1/2'>
