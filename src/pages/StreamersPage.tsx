@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import TwitchStreamers from "../components/TwitchStreamers";
 
 const title: string = process.env["NODE_ENV"] === "development" ? "La voie pailletée (DEV)": "La voie pailletée";
 const StreamersPage: React.FC = () => {
@@ -13,24 +14,14 @@ const StreamersPage: React.FC = () => {
         <Header />
 
         {/* Page Section */}
-        <section>
-            <h2 className="
-                pb-4 
-                pt-4 
-                text-3xl 
-                text-center 
-                uppercase 
-                break-words 
-                sm:text-4xl 
-                md:text-4xl 
-                lg:text-5xl 
-                md:text-center 
-                md:bg-transparent
-                font-kony
-                text-crimson
-            ">
-                Les Streameur.euse.s
-            </h2>
+        <section className="relative bg-[#eeeeee]">
+            <div className="relative flex justify-center p-3 mx-auto mt-14 md:mt-52 w-fit">
+                <h2 className="uppercase content-center text-[2rem] w-56 md:text-6xl md:w-auto md:max-w-[50vw] leading-[2.5rem] text-center text-crimson font-kony">
+                    Les Streameur.euse.s
+                </h2>
+            </div>
+            
+            <TwitchStreamers />
         </section>
 
         {/* Footer */}

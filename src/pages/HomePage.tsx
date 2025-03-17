@@ -145,6 +145,7 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
+      
       {/* Equipe */}
       <section className="relative bg-goldenrod">
         <div className="relative flex justify-center p-3 mx-auto mt-14 md:mt-52 w-fit">
