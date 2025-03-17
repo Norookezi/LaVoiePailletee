@@ -11,26 +11,17 @@ interface IconLinkProps {
 export default function IconLink({ link, icon, hoverColor = "#ef476f" }: IconLinkProps): JSX.Element {
 
     return (
-        <a
-          href={link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`text-white transition-transform duration-500 ease-out flex items-center justify-center w-12 h-12 hover:scale-150`}
-        >
-            <FontAwesomeIcon 
-              icon={icon} 
-              className="text-3xl md:text-4xl w-8 h-8 transition-colors duration-500 ease-out"
-              style={{
-                color: "white",
-                transition: "color 0.5s ease-out",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = hoverColor;
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = "white";
-              }}
-            />
-        </a>
+      (<a
+        href={link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center justify-center w-12 h-12 text-white"
+      >
+        <FontAwesomeIcon 
+          icon={icon} 
+          style={{color: hoverColor}}
+          className="w-8 h-8 text-3xl duration-500 ease-out md:text-4xl [&:not(:hover)]:!text-white hover:scale-150"
+        />
+      </a>)
     );
 };
