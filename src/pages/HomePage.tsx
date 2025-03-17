@@ -189,7 +189,7 @@ const HomePage: React.FC = () => {
           />
         </div>
         <div className="flex flex-wrap justify-center w-screen pt-10 mt-14 px-7 md:mt-10 md:px-20">
-          <UserCard href="images/team/norookezi.webp" name="norookezi" job="Hébergement, développement & DevOps" />
+          <UserCard href="images/team/Norookezi.webp" name="norookezi" job="Hébergement, développement & DevOps" />
           <UserCard href="images/team/h0ldhaven.webp" name="h0ldhaven" job="Responsable concepteur développeur" />
         </div>
       </section>
