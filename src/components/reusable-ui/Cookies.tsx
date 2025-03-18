@@ -1,4 +1,4 @@
-import { ChangeEvent, JSX, MouseEvent, useState } from 'react';
+import { ChangeEvent, JSX, useState } from 'react';
 import Cookies from 'universal-cookie';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
