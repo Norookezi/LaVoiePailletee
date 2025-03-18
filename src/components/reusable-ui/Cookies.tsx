@@ -70,14 +70,14 @@ export default function CookiesMenu(): JSX.Element {
   };
 
   const handleDeny = () => {
-    cookieHandler.cookiesState = 'denied';
     cookieHandler.clearAll();
+    cookieHandler.cookiesState = 'denied';
     setCookieStatus('denied');
   };
 
   const handleReset = () => {
+      cookieHandler.clearAll();
     cookieHandler.cookiesState = 'pending';
-    cookieHandler.clearAll();
     setCookieStatus('pending');
   };
 
