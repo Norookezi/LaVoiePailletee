@@ -7,7 +7,7 @@ export interface Streamer {
     isLive: boolean;
 }
 
-const streamerLogins = ["mehdoche", "camak", "h0ldhaven", "petounio", "thainozis", "agwab", "chatoningame", "terracid", "roi_louis", "zerator", "antoinedaniel", "joueur_du_grenier", "alexclick"];
+const streamerLogins = ["iti63", "camak", "h0ldhaven", "petounio", "thainozis", "agwab", "chatoningame", "terracid", "roi_louis", "zerator", "antoinedaniel", "joueur_du_grenier", "alexclick"];
 
 export const fetchStreamersData = async (): Promise<Streamer[]> => {
     try {

@@ -1,14 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { fetchStreamersData, Streamer } from "../services/FetchStreamers";
+import { getRequestCount } from "../services/RequestLogger";
 import StreamerCard from "./reusable-ui/StreamerCard";
 
 const TwitchStreamers: React.FC = () => {
     const [streamers, setStreamers] = useState<Streamer[]>([]);
 
     useEffect(() => {
+        console.log("🔄 useEffect exécuté");
+        
         const loadStreamers = async () => {
             const data = await fetchStreamersData();
             setStreamers(data);
+
+            // Count request from axios in debug mode (set "REACT_DEBUG_MODE=true (or false)" in your .env.local file)
+            {process.env.REACT_DEBUG_MODE && (
+                console.log(`🔍 Nombre total de requêtes Axios : ${getRequestCount()}`)
+            )}
         };
 
         loadStreamers();

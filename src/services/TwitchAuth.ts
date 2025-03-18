@@ -1,4 +1,5 @@
 import axios from "axios";
+import { attachLogger } from "./RequestLogger";
 
 const CLIENT_ID = process.env.REACT_APP_TWITCH_CLIENT_ID || "";
 const CLIENT_SECRET = process.env.REACT_APP_TWITCH_CLIENT_SECRET || "";
@@ -26,6 +27,8 @@ const getNewAccessToken = async (): Promise<string | null> => {
 const api = axios.create({
     baseURL: "https://api.twitch.tv/helix",
 });
+
+attachLogger(api);
 
 api.interceptors.request.use(async (config) => {
     let token = localStorage.getItem("twitch_access_token") || ACCESS_TOKEN;
