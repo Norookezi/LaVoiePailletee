@@ -111,7 +111,7 @@ export default function CookiesMenu(): JSX.Element {
           <span className='m-1'>Vous reprendrez bien un cookie ?</span>
         </div>
         <p
-          className={`p-3 break-words w-96 ${
+          className={`p-3 break-words max-w-[90vw] w-96  ${
             isOptionSelected ? 'hidden' : 'block'
           }`}
         >
@@ -178,21 +178,21 @@ export default function CookiesMenu(): JSX.Element {
             onClick={handleAccept}
             className='flex-1 p-2 m-1 text-center text-black duration-300 rounded-lg shadow-sm cursor-pointer bg-mediumseagreen/50 hover:bg-mediumseagreen/70 hover:shadow-lg'
           >
-            <FontAwesomeIcon icon={faCheck} className='mr-1' />
+            <FontAwesomeIcon icon={faCheck} className='mr-1 max-sm:block max-sm:mx-auto' />
             <span>Accepter</span>
           </span>
           <span
             onClick={handleDeny}
             className='flex-1 p-2 m-1 text-center text-black duration-300 rounded-lg shadow-sm cursor-pointer bg-red-400/50 hover:bg-red-400/70 hover:shadow-lg'
           >
-            <FontAwesomeIcon icon={faXmark} className='mr-1' />
+            <FontAwesomeIcon icon={faXmark} className='mr-1 max-sm:block max-sm:mx-auto' />
             <span>Refuser</span>
           </span>
           <span
             onClick={handleOption}
             className='flex-1 p-2 m-1 text-center text-black duration-300 border-2 rounded-lg cursor-pointer bg-gray-400/50 hover:bg-gray-400/70 hover:shadow-lg'
           >
-            <FontAwesomeIcon icon={faGear} className='mr-1' />
+            <FontAwesomeIcon icon={faGear} className='mr-1 max-sm:block max-sm:mx-auto' />
             <span>Choisir</span>
           </span>
         </div>
