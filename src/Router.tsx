@@ -28,7 +28,6 @@ function setupAnalystics() {
     page: window.location.pathname,
     title: `La voie pailletée (${process.env.NODE_ENV})`,
   });
-  console.info("Google analytics setup successfully");
 }
 
 function setRef() {

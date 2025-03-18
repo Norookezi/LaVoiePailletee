@@ -14,9 +14,6 @@ class Cookie {
   updateCookie(event: ChangeEvent<HTMLInputElement>): void {
       const {checked, id} = event.target;
         this.cookies[id] = checked;
-
-        console.log(this.cookies)
-
   }
   get cookiesState(): 'denied' | 'granted' | 'pending' | string {
     return cookies.get('cookies') ?? 'pending';
