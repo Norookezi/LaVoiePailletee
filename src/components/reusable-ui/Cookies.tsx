@@ -32,6 +32,12 @@ class Cookie {
   get isCookiesPending(): boolean {
     return this.cookiesState === 'pending';
   }
+
+  clearAll() {
+    Object.keys(cookies.getAll()).forEach(cookie=>{
+        cookies.remove(cookie)
+    });
+  }
 }
 
 function getColor(value: string) {
@@ -65,11 +71,13 @@ export default function CookiesMenu(): JSX.Element {
 
   const handleDeny = () => {
     cookieHandler.cookiesState = 'denied';
+    cookieHandler.clearAll();
     setCookieStatus('denied');
   };
 
   const handleReset = () => {
     cookieHandler.cookiesState = 'pending';
+    cookieHandler.clearAll();
     setCookieStatus('pending');
   };
 
