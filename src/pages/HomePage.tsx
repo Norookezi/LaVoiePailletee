@@ -1,6 +1,7 @@
 import React from "react";
-import Footer from "../components/Footer";
+import { Link } from "react-router-dom";
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 import ImageLink from "../components/reusable-ui/ImageLink";
 import UserCard from "../components/reusable-ui/UserCard";
 
@@ -45,11 +46,13 @@ const HomePage: React.FC = () => {
               Pleins de paillettes dans vos beaux yeux 👀
             </span>
           </div>
-          <div className="flex justify-end px-8 md:justify-start md:px-0">
-            <p className="px-3 py-2 text-white uppercase w-fit md:text-2xl font-kony rounded-xl bg-mediumseagreen">
-              + de 50 streamers<span className="md:hidden"> participent</span>
-            </p>
-          </div>
+          <Link to="/streamers">
+            <div className="flex justify-end px-8 md:justify-start md:px-0">
+              <p className="px-3 py-2 text-white uppercase w-fit md:text-2xl font-kony rounded-xl bg-mediumseagreen">
+                + de 50 streamers<span className="md:hidden"> participent</span>
+              </p>
+            </div>
+          </Link>
         </div>
       </section>
 
