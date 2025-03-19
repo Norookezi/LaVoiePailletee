@@ -94,54 +94,42 @@ const HomePage: React.FC = () => {
           </h2>
 
           <div className="grid gap-5 px-[15vw] grid-cols-2 md:grid-cols-6 md:px-0 sm:grid-cols-3 justify-center md:flex-1 items-center lg:max-w-[70rem]">
-            <div className="flex items-center justify-center">
-              <ImageLink
+            <ImageLink
                 imageSize={20}
                 link="https://eastgames.org/"
                 imageSource="images/partenaires/east_games.webp"
                 imageAlt="East Games"
               />
-            </div>
-            <div className="flex items-center justify-center">
-              <ImageLink
+            <ImageLink
                 imageSize={20}
                 link="https://www.cybergrange.eu/"
                 imageSource="images/partenaires/la_cybergrange.webp"
                 imageAlt="La CyberGrange"
               />
-            </div>
-            <div className="flex items-center justify-center">
-              <ImageLink
+            <ImageLink
                 imageSize={20}
                 link="https://www.getailicia.com/fr"
                 imageSource="images/partenaires/ai_licia.webp"
                 imageAlt="Ai Licia"
               />
-            </div>
-            <div className="flex items-center justify-center">
-              <ImageLink
+            <ImageLink
                 imageSize={20}
                 link="https://www.skillcamp.gg/"
                 imageSource="images/partenaires/skillcamp.webp"
                 imageAlt="SkillCamp"
               />
-            </div>
-            <div className="flex items-center justify-center">
-              <ImageLink
+            <ImageLink
                 imageSize={20}
                 link="https://www.ventdivin.com/"
                 imageSource="images/partenaires/vent_divin.webp"
                 imageAlt="Vent Divin"
               />
-            </div>
-            <div className="flex items-center justify-center">
-              <ImageLink
+            <ImageLink
                 imageSize={20}
                 link="https://shadok-strasbourg.eu/"
                 imageSource="images/partenaires/le_shadok.webp"
                 imageAlt="Le Shadok"
               />
-            </div>
           </div>
         </div>
       </section>
