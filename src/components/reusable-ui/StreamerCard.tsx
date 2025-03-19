@@ -6,6 +6,26 @@ interface StreamerCardProps {
     isLive?: boolean;
 }
 
+const rainbowColors = [
+    "#FF0000", // Red
+    "#FF4500", // Orange Red (nuance intermédiaire)
+    "#FF7F00", // Orange
+    "#FFD700", // Gold
+    "#FFB300", // Light Gold (transition vers rouge)
+    "#FF9A00", // Darker Yellow (transition douce vers rouge)
+    "#FFFF00", // Yellow
+    "#9ACD32", // Yellow Green (nuance intermédiaire)
+    "#00FF00", // Green
+    "#00FA9A", // Medium Spring Green (nuance intermédiaire)
+    "#00FFFF", // Cyan
+    "#1498c4", // Light Blue (nuance intermédiaire)
+    "#0000FF", // Blue
+    "#4B0082", // Indigo
+    "#9400D3", // Violet
+    "#FF1493", // Deep Pink
+    "#ee3333"  // Gold (for wrapping back to the start)
+];
+
 export default function StreamerCard({username, avatar, isLive = false}: StreamerCardProps): JSX.Element {
     return(
         <a
@@ -17,13 +37,20 @@ export default function StreamerCard({username, avatar, isLive = false}: Streame
             {isLive && (
                 <div className="absolute top-0 right-0 w-4 h-4 bg-red-500 rounded-full animate-pulse border-2 border-gray-900 z-10" />
             )}
-            <div className="flex flex-col text-center items-center justify-center h-full w-full">
-                <div className="w-24 sm:w-28 md:w-32 lg:w-36 xl:w-40 relative aspect-[1/1] overflow-hidden border-4 border-gray-700 rounded-full">
+            <div className="flex flex-col text-center items-center justify-center h-full w-full transition-transform duration-300 ease-in-out group-hover:scale-105">
+                <div 
+                    className="relative flex items-center justify-center aspect-square rounded-full overflow-hidden
+                w-24 sm:w-28 md:w-32 lg:w-36 xl:w-40"
+                    style={{
+                        backgroundImage: `conic-gradient(${rainbowColors.join(", ")})`,
+                    }}
+                >
                     <img 
                         src={avatar} 
                         loading="lazy" 
                         alt={username} 
-                        className="absolute object-cover w-full h-full rounded-full" 
+                        className="w-[90%] h-[90%] rounded-full object-cover bg-[#eeeeee]"
+                        
                     />
                 </div>
                 <span className="text-center mt-2 text-xs sm:text-base md:text-lg lg:text-xl w-full text-[#ef476f] font-kony">{username}</span>

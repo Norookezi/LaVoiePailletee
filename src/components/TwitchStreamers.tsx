@@ -14,9 +14,9 @@ const TwitchStreamers: React.FC = () => {
             setStreamers(data);
 
             // Count request from axios in debug mode (set "REACT_DEBUG_MODE=true (or false)" in your .env.local file)
-            {process.env.REACT_DEBUG_MODE && (
-                console.log(`🔍 Nombre total de requêtes Axios : ${getRequestCount()}`)
-            )}
+            if (process.env.REACT_DEBUG_MODE) {
+                console.log(`🔍 Nombre total de requêtes Axios : ${getRequestCount()}`);
+            }
         };
 
         loadStreamers();
@@ -29,6 +29,9 @@ const TwitchStreamers: React.FC = () => {
         <div className="mt-20 p-4 max-w-7xl mx-auto">
             <h2 className="text-3xl uppercase text-center mb-4 text-crimson font-kony">🎥 Streamers en direct</h2>
             <div className="flex flex-wrap gap-5 justify-center w-auto pt-10 mt-14 px-7 md:mt-10 md:px-20 mb-10">
+                {liveStreamers.length === 0 && (
+                    <h3 className="text-center text-xs sm:text-base md:text-lg lg:text-xl text-[#9c9898] font-kony">Aucun streameur "en ligne" actuellement</h3>
+                )}
                 {liveStreamers.map((streamer) => (
                     <StreamerCard key={streamer.id} username={streamer.name} avatar={streamer.avatar} isLive />
                 ))}
@@ -38,6 +41,9 @@ const TwitchStreamers: React.FC = () => {
 
             <h2 className="mt-10 text-3xl uppercase text-center mb-4 text-crimson font-kony">💤 Streamers hors ligne</h2>
             <div className="flex flex-wrap gap-5 justify-center w-auto pt-10 mt-14 px-7 md:mt-10 md:px-20">
+                {offlineStreamers.length === 0 && (
+                    <h3 className="text-center text-xs sm:text-base md:text-lg lg:text-xl text-[#9c9898] font-kony">Aucun streameur "hors ligne" actuellement</h3>
+                )}
                 {offlineStreamers.map((streamer) => (
                     <StreamerCard key={streamer.id} username={streamer.name} avatar={streamer.avatar} />
                 ))}

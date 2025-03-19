@@ -1,4 +1,5 @@
 import api from "./TwitchAuth";
+import { fetchGoogleSheetData } from "./FetchGoogleSheets";
 
 export interface Streamer {
     id: string;
@@ -7,10 +8,22 @@ export interface Streamer {
     isLive: boolean;
 }
 
-const streamerLogins = ["iti63", "camak", "h0ldhaven", "petounio", "thainozis", "agwab", "chatoningame", "terracid", "roi_louis", "zerator", "antoinedaniel", "joueur_du_grenier", "alexclick"];
-
 export const fetchStreamersData = async (): Promise<Streamer[]> => {
     try {
+
+      // 1️⃣ Récupérer les noms des streamers depuis la Google Sheet
+      const streamerLogins = await fetchGoogleSheetData({
+        sheetId: "1ggCnsqJmcA-Xxjv50NV_P9pqIZf9tc2rCz6PaYhZzNY",
+        columns: "a",
+        rows: "1:300"
+      });
+
+      if (streamerLogins.length === 0) {
+          console.warn("⚠️ Aucun streamer trouvé dans la Google Sheet.");
+          return [];
+      }
+
+      console.log("✅ Streamers récupérés depuis Google Sheet :", streamerLogins);
   
       // Récupérer les informations des utilisateurs
       const userResponse = await api.get("/users", {
