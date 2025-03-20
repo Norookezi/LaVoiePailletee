@@ -10,16 +10,22 @@ interface ImageLinkProps {
 export default function ImageLink({ link, imageSource, imageAlt, imageSize }: ImageLinkProps): JSX.Element {
     return(
         <a
-          href={link}
-          target="_blank" 
-          rel="noopener noreferrer"
-          className={` group w-${imageSize} h-${imageSize} aspect-square md:w-20 md:h-20 flex justify-center items-center bg-white bg-opacity-40 rounded-full shadow-md overflow-hidden transition-transform transform hover:scale-110`}
+            href={link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex flex-col items-center justify-between transition-transform transform hover:scale-105 
+                       w-[clamp(90px,11vw,130px)] h-[clamp(110px, 13vw,150px)] gap-4 flex-shrink-0"
         >
-            <img 
-                src={imageSource}
-                alt={imageAlt}
-                className={`w-full h-full p-3 max-w-[80px] max-h-[80px] md:max-w-[128px] md:max-h-[128px] object-contain transition-opacity duration-300 group-hover:opacity-80`}
-            />
+            <div className="w-[clamp(60px,8vw,90px)] aspect-square bg-white bg-opacity-40 rounded-full shadow-md overflow-hidden flex items-center justify-center">
+                <img
+                    src={imageSource}
+                    alt={imageAlt}
+                    className="w-[clamp(50%,65%,75%)] h-[clamp(50%,65%,75%)] object-contain transition-opacity duration-300 hover:opacity-80"
+                />
+            </div>
+            <span className="text-center font-roboto w-full px-2 text-[clamp(8px, 1vw, 12px)] leading-tight break-words flex-grow h-[clamp(1.2em,2vw,2.4em)] flex items-center justify-center">
+                {imageAlt}
+            </span>
         </a>
     );
 };
