@@ -48,7 +48,7 @@ const HomePage: React.FC = () => {
           </div>
           <Link to="/streamers">
             <div className="flex justify-end px-8 md:justify-start md:px-0">
-              <p className="px-3 py-2 text-white uppercase w-fit md:text-2xl font-kony rounded-xl bg-mediumseagreen">
+              <p className="px-3 py-2 text-white uppercase w-fit md:text-2xl font-kony rounded-xl bg-mediumseagreen hover:animate-bounce">
                 + de 50 streamers<span className="md:hidden"> participent</span>
               </p>
             </div>
