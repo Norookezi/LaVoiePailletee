@@ -83,7 +83,6 @@ const HomePage: React.FC = () => {
             familiale. Elle les héberge et les accompagne vers leur
             reconstruction émotionnelle et matérielle.
           </p>
-
           <Link to="https://le-refuge.org/">
             <div className="flex justify-center px-8 md:justify-start md:px-0 sm:w-full">
               <p className="px-3 py-2 uppercase break-all bg-white text-mediumseagreen w-fit md:text-2xl sm:text-lg font-kony rounded-xl">
