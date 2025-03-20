@@ -3,6 +3,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import ImageLink from "../components/reusable-ui/ImageLink";
 import UserCard from "../components/reusable-ui/UserCard";
+import { Link } from "react-router-dom";
 
 const title: string = process.env["NODE_ENV"] === "development" ? "La voie pailletée (DEV)": "La voie pailletée";
 
@@ -70,11 +71,11 @@ const HomePage: React.FC = () => {
         </div>
 
         <div className="flex-col justify-start flex-1 px-16 py-16 text-white bg-mediumseagreen md:py-20 md:px-20lg:py-32 lg:px-32flex mx-autow-full h-autosm: h-automd:h-autolg:h-auto lg:w-full">
-          <h2 className="pb-4 text-3xl text-center uppercase break-words sm:text-4xl md:text-4xl lg:text-5xl md:text-left font-kony">
+          <h2 className="pb-4 text-4xl text-center uppercase break-words sm:text-5xl md:text-5xl lg:text-6xl md:text-left font-kony">
             L'intolérance <br />
             brise des vies
           </h2>
-          <p className="pt-4 pb-4 text-base text-center break-words bg sm:text-lg md:text-lg md:text-left font-roboto">
+          <p className="pt-4 pb-4 text-lg text-center break-words bg sm:text-xl md:text-lg md:text-left font-roboto">
             Le Refuge, c'est la fondation que nous allons soutenir grâce à vos
             donations. Depuis près de 20 ans, la Fondation Le Refuge agit pour
             briser l'isolement et le suicide des jeunes LGBTQI+, de 14 à 25 ans,
@@ -82,6 +83,14 @@ const HomePage: React.FC = () => {
             familiale. Elle les héberge et les accompagne vers leur
             reconstruction émotionnelle et matérielle.
           </p>
+
+          <Link to="https://le-refuge.org/">
+            <div className="flex justify-center px-8 md:justify-start md:px-0 sm:w-full">
+              <p className="break-all px-3 py-2 text-mediumseagreen uppercase w-fit md:text-2xl sm:text-lg font-kony rounded-xl bg-white">
+                Visiter le site
+              </p>
+            </div>
+          </Link>
         </div>
       </section>
 
@@ -93,21 +102,29 @@ const HomePage: React.FC = () => {
             <span className="ml-4 max-2xl:block">l'évènement</span>
           </h2>
 
-          <div className="grid gap-5 px-[15vw] grid-cols-2 md:grid-cols-6 md:px-0 sm:grid-cols-3 justify-center md:flex-1 items-center lg:max-w-[70rem]">
-            <div className="flex items-center justify-center">
-              <ImageLink
-                imageSize={20}
-                link="https://eastgames.org/"
-                imageSource="images/partenaires/east_games.webp"
-                imageAlt="East Games"
-              />
-            </div>
+          <div className="grid gap-3 px-[15vw] grid-cols-1 md:grid-cols-6 md:px-0 sm:grid-cols-3 justify-center md:flex-1 items-center lg:max-w-[70rem]">
             <div className="flex items-center justify-center">
               <ImageLink
                 imageSize={20}
                 link="https://www.cybergrange.eu/"
                 imageSource="images/partenaires/la_cybergrange.webp"
                 imageAlt="La CyberGrange"
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <ImageLink
+                imageSize={20}
+                link="https://shadok-strasbourg.eu/"
+                imageSource="images/partenaires/le_shadok.webp"
+                imageAlt="Le Shadok"
+              />
+            </div>
+            <div className="flex items-center justify-center">
+              <ImageLink
+                imageSize={20}
+                link="https://eastgames.org/"
+                imageSource="images/partenaires/east_games.webp"
+                imageAlt="East Games"
               />
             </div>
             <div className="flex items-center justify-center">
@@ -134,14 +151,6 @@ const HomePage: React.FC = () => {
                 imageAlt="Vent Divin"
               />
             </div>
-            <div className="flex items-center justify-center">
-              <ImageLink
-                imageSize={20}
-                link="https://shadok-strasbourg.eu/"
-                imageSource="images/partenaires/le_shadok.webp"
-                imageAlt="Le Shadok"
-              />
-            </div>
           </div>
         </div>
       </section>
@@ -162,16 +171,16 @@ const HomePage: React.FC = () => {
             alt=""
           />
         </div>
-        <div className="flex flex-wrap justify-center w-screen pt-10 mt-14 px-7 md:mt-10 md:px-20">
+        <div className="flex flex-wrap justify-center w-full pt-10 mt-14 px-7 md:mt-10 md:px-20">
           <UserCard href="images/team/Camille.webp" name="Camille" job="Présidente de l'association SolidariGames" />
-          <UserCard href="images/team/Petounio.webp" name="Petounio" job="CoPrésident de l'association SolidariGames" />
+          <UserCard href="images/team/Petounio.webp" name="Petounio" job="Vice Président de l'association SolidariGames et Fondateur de la Voie Pailletée" />
+          <UserCard href="images/team/Jimmy.webp" name="Jimmy" job="Trésorier" />
           <UserCard href="images/team/GeekLawliet.webp" name="GeekLawliet" job="Secrétaire" />
           <UserCard href="images/team/MissVeronicaLife.webp" name="MissVeronicaLife" job="Responsable boutique" />
-          <UserCard href="images/team/Matsu.webp" name="Matsu" job="Responsable recrutement" />
+          <UserCard href="images/team/Matsu.webp" name="Matsu" job="Responsable Modération" />
           <UserCard href="images/team/Natiel.webp" name="Natiel" job="Responsable recrutement" />
           <UserCard href="images/team/NobodyZ.webp" name="NobodyZ" job="Responsable artistique" />
           <UserCard href="images/team/Valcka.webp" name="Valcka" job="Responsable réseaux sociaux" />
-          <UserCard href="images/team/Jimmy.webp" name="Jimmy" job="Trésorier" />
         </div>
         <div className="relative flex justify-center p-3 mx-auto mt-14 md:mt-52 w-fit">
           <img
@@ -188,7 +197,7 @@ const HomePage: React.FC = () => {
             alt=""
           />
         </div>
-        <div className="flex flex-wrap justify-center w-screen pt-10 mt-14 px-7 md:mt-10 md:px-20">
+        <div className="flex flex-wrap justify-center w-full pt-10 mt-14 px-7 md:mt-10 md:px-20">
           <UserCard href="images/team/Norookezi.webp" name="norookezi" job="Hébergement, développement & DevOps" />
           <UserCard href="images/team/h0ldhaven.webp" name="h0ldhaven" job="Responsable concepteur développeur" />
         </div>
