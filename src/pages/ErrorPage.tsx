@@ -1,0 +1,57 @@
+import React, { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+
+interface ErrorState {
+    errorStatus: number;
+    errorMessage: string;
+}
+
+const title: string = process.env["NODE_ENV"] === "development" ? "La voie pailletée (DEV)": "La voie pailletée";
+
+const ErrorPage: React.FC = () => {
+    const location = useLocation();
+    const [errorStatus, setErrorStatus] = useState<number>(404);
+    const [errorMessage, setErrorMessage] = useState<string>("Page non trouvée. Veuillez vérifier l'URL.");
+
+    useEffect(() => {
+        // Vérifie si l'état d'erreur est passé via la location
+        const state = location.state as ErrorState | undefined;
+        if (state?.errorStatus && state?.errorMessage) {
+            setErrorStatus(state.errorStatus);
+            setErrorMessage(state.errorMessage);
+        }
+    }, [location]);
+
+    return(
+        <main className="flex flex-col h-full min-h-screen">
+            <title>{title}</title>
+
+            {/* Header */}
+            <Header />
+
+            {/* Error Section */}
+            <section className="flex flex-col items-center justify-center flex-grow text-center p-6">
+                <h1 className="text-4xl font-bold text-red-500 uppercase font-kony">Erreur {errorStatus}</h1>
+                <p className="text-xl text-gray-700 font-roboto">{errorMessage}</p>
+                <div className="mt-4">
+                    <Link to="/">
+                        <div className="flex justify-end px-8 md:justify-start md:px-0">
+                            <p className="px-3 py-2 text-white uppercase w-fit md:text-2xl font-kony rounded-xl bg-mediumseagreen">
+                                Retour à l'accueil
+                            </p>
+                        </div>
+                    </Link>
+                </div>
+            </section>
+
+            {/* Footer */}
+            <div className="mt-auto">
+                <Footer />
+            </div>
+        </main>
+    );
+};
+
+export default ErrorPage;
