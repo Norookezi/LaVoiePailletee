@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Cookies from "universal-cookie";
 
+import ErrorPage from "./pages/ErrorPage";
 import HomePage from "./pages/HomePage";
 import StreamersPage from "./pages/StreamersPage";
 import ReactGA from "react-ga4";
@@ -54,6 +55,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <Routes>
+        <Route path="*" element={<ErrorPage />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/streamers" element={<StreamersPage />} />
       </Routes>
