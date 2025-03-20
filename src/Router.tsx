@@ -5,6 +5,7 @@ import Cookies from "universal-cookie";
 import ErrorPage from "./pages/ErrorPage";
 import HomePage from "./pages/HomePage";
 import ReactGA from "react-ga4";
+import PartnerPage from "./pages/PartnerPage";
 
 const cookies = new Cookies();
 
@@ -56,6 +57,7 @@ const App: React.FC = () => {
       <Routes>
         <Route path="*" element={<ErrorPage />} />
         <Route path="/" element={<HomePage />} />
+        <Route path="/partenaires" element={<PartnerPage />} />
       </Routes>
     </Router>
   );
