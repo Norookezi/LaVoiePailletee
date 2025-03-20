@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import TwitchStreamers from "../components/TwitchStreamers";
+import TwitchStreamers from "../components/sections/TwitchStreamersSection";
 
 const title: string = process.env["NODE_ENV"] === "development" ? "La voie pailletée (DEV)": "La voie pailletée";
 const StreamersPage: React.FC = () => {
