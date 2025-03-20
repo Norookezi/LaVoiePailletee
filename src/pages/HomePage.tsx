@@ -1,9 +1,9 @@
 import React from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import ImageLink from "../components/reusable-ui/ImageLink";
 import UserCard from "../components/reusable-ui/UserCard";
 import { Link } from 'react-router-dom';
+import PartnerSection from "../components/sections/PartnerSection";
 
 const title: string = process.env["NODE_ENV"] === "development" ? "La voie pailletée (DEV)": "La voie pailletée";
 
@@ -95,65 +95,8 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Partenaires Section */}
-      <section className="flex flex-col justify-center flex-1 py-10 text-center text-white shadow-2xl bg-crimson">
-        <div className="flex flex-col lg:flex-row md:items-center md:justify-evenly md:mx-10">
-          <h2 className="p-5 text-3xl tracking-wide text-center break-words whitespace-normal md:text-5xl md:whitespace-nowrap font-kony">
-            <span>Partenaires de</span>
-            <span className="ml-4 max-2xl:block">l'évènement</span>
-          </h2>
-
-          <div className="grid gap-3 px-[15vw] grid-cols-1 md:grid-cols-6 md:px-0 sm:grid-cols-3 justify-center md:flex-1 items-center lg:max-w-[70rem]">
-            <div className="flex items-center justify-center">
-              <ImageLink
-                imageSize={20}
-                link="https://www.cybergrange.eu/"
-                imageSource="images/partenaires/la_cybergrange.webp"
-                imageAlt="La CyberGrange"
-              />
-            </div>
-            <div className="flex items-center justify-center">
-              <ImageLink
-                imageSize={20}
-                link="https://shadok-strasbourg.eu/"
-                imageSource="images/partenaires/le_shadok.webp"
-                imageAlt="Le Shadok"
-              />
-            </div>
-            <div className="flex items-center justify-center">
-              <ImageLink
-                imageSize={20}
-                link="https://eastgames.org/"
-                imageSource="images/partenaires/east_games.webp"
-                imageAlt="East Games"
-              />
-            </div>
-            <div className="flex items-center justify-center">
-              <ImageLink
-                imageSize={20}
-                link="https://www.getailicia.com/fr"
-                imageSource="images/partenaires/ai_licia.webp"
-                imageAlt="Ai Licia"
-              />
-            </div>
-            <div className="flex items-center justify-center">
-              <ImageLink
-                imageSize={20}
-                link="https://www.skillcamp.gg/"
-                imageSource="images/partenaires/skillcamp.webp"
-                imageAlt="SkillCamp"
-              />
-            </div>
-            <div className="flex items-center justify-center">
-              <ImageLink
-                imageSize={20}
-                link="https://www.ventdivin.com/"
-                imageSource="images/partenaires/vent_divin.webp"
-                imageAlt="Vent Divin"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+      <PartnerSection />
+      
       {/* Equipe */}
       <section className="relative bg-goldenrod">
         <div className="relative flex justify-center p-3 mx-auto mt-14 md:mt-52 w-fit">
