@@ -46,7 +46,7 @@ function getColor(value: string) {
             case 'denied':
                 return 'bg-red-400/70';
             default:
-                return '';
+                return 'bg-white';
     }
 };
 
@@ -144,7 +144,7 @@ export default function CookiesMenu(): JSX.Element {
           <p className='px-3 max-w-96'>Afin de pouvoir mesurer l'impact de notre site, nous avons mit en place un outil d'analyse anonyme qui nous permet de voir les information suivante</p>
           <label htmlFor={'Analytics_detail'} className='p-2 group'>
               <input type='checkbox' className='hidden' name='Analytics_detail' id='Analytics_detail' />
-              <span><FontAwesomeIcon icon={faChevronDown} className='mr-1 duration-100 -rotate-90 group-has-[:checked]:-rotate-0' /></span>
+              <span className='underline hover:font-bold'>Voir plus <FontAwesomeIcon icon={faChevronDown} className='mr-1 duration-100 -rotate-90 group-has-[:checked]:-rotate-0' /></span>
               <div className='hidden group-has-[:checked]:block'>
               <ul className='pl-5 list-disc'>
                 <li>Zone géographique aproximative</li>

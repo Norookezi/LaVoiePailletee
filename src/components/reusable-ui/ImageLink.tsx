@@ -1,7 +1,8 @@
 import { JSX } from "react";
+import { Link, LinkProps } from "react-router-dom";
 
 interface ImageLinkProps {
-    link: string;
+    link: LinkProps|string;
     imageSource: string;
     imageAlt: string;
     imageSize: number;
@@ -9,10 +10,11 @@ interface ImageLinkProps {
 
 export default function ImageLink({ link, imageSource, imageAlt, imageSize }: ImageLinkProps): JSX.Element {
     return(
-        <a
-            href={link}
-            target="_blank"
-            rel="noopener noreferrer"
+        <Link
+            reloadDocument 
+            to={typeof link === "string"? link : link.to}
+            // target="_blank"
+            // rel="noopener noreferrer"
             className="flex flex-col items-center justify-between transition-transform transform hover:scale-105 
                        w-[clamp(90px,10vw,120px)] h-auto flex-shrink-0"
         >
@@ -31,6 +33,6 @@ export default function ImageLink({ link, imageSource, imageAlt, imageSize }: Im
                              min-h-[clamp(2em,2.2vw,2.6em)] flex items-center justify-center">
                 {imageAlt}
             </span>
-        </a>
+        </Link>
     );
 };
