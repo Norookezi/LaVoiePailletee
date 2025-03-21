@@ -1,4 +1,5 @@
 import { JSX } from "react";
+import { Link } from "react-router-dom";
 import ImageLink from "../reusable-ui/ImageLink";
 
 interface Partner {
@@ -57,6 +58,14 @@ export default function PartnerContainer():JSX.Element {
                         </div>
                     ))}
                 </div>
+
+                <Link to="#">
+                    <div className="flex justify-center mt-20 px-8 md:justify-start md:px-0 sm:w-full">
+                    <p className="break-all px-3 py-2 text-crimson uppercase w-fit md:text-2xl sm:text-lg font-kony rounded-xl bg-white">
+                        En savoir plus
+                    </p>
+                    </div>
+                </Link>
             </div>
         </section>
     );
