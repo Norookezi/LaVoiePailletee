@@ -13,22 +13,23 @@ export default function ImageLink({ link, imageSource, imageAlt, imageSize }: Im
             href={link}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-col items-center justify-between transition-transform transform hover:scale-105 
-                       w-[clamp(90px,10vw,120px)] h-auto flex-shrink-0"
+            className="flex flex-col items-center justify-between transition-transform transform hover:scale-105
+                       w-[clamp(150px,12vw,150px)] h-full flex-shrink-0"
         >
             {/* Conteneur de l'image */}
-            <div className="w-[clamp(60px,8vw,90px)] aspect-square bg-white bg-opacity-40 rounded-full shadow-md 
-                            overflow-hidden flex items-center justify-center">
+            <div className="w-full h-full bg-white bg-opacity-40 rounded-full shadow-md
+                            overflow-hidden flex items-center justify-center w-[clamp(120px, 20vw, 150px)]"
+                 style={{ height: "clamp(120px, 20vw, 150px)", width: "clamp(120px, 20vw, 150px)" }}>
                 <img
                     src={imageSource}
                     alt={imageAlt}
-                    className="w-[clamp(50%,65%,75%)] h-[clamp(50%,65%,75%)] object-contain transition-opacity duration-300 hover:opacity-80"
+                    className="w-[clamp(60%, 70%, 80%)] h-[clamp(60%, 70%, 80%)] object-contain transition-opacity duration-300 hover:opacity-80"
                 />
             </div>
 
             {/* Texte adaptatif et uniforme */}
-            <span className="text-center font-roboto w-full px-2 text-[clamp(12px,1.2vw,14px)] leading-tight 
-                             min-h-[clamp(2em,2.2vw,2.6em)] flex items-center justify-center">
+            <span className="text-center font-roboto w-full px-2 text-[clamp(14px,1.2rem,18px)] leading-tight
+                             min-h-[2.4em] max-h-[3.6em] flex items-center justify-center mt-2">
                 {imageAlt}
             </span>
         </a>

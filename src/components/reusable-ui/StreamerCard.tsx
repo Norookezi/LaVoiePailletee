@@ -37,7 +37,7 @@ export default function StreamerCard({username, avatar, isLive = false}: Streame
             
 
             {isLive && (
-                <div className="absolute top-0 right-0 w-4 h-4 bg-red-500 rounded-full animate-pulse border-2 border-gray-900 z-10" />
+                <div className="absolute top-0 right-0 w-4 h-4 bg-green-500 rounded-full animate-pulse border-2 border-gray-900 z-10" />
             )}
             <div className="flex flex-col text-center items-center justify-center h-full w-full transition-transform duration-300 ease-in-out group-hover:scale-105">
                 <div className="relative flex items-center justify-center aspect-square rounded-full w-24 sm:w-28 md:w-32 lg:w-36 xl:w-40">
@@ -57,7 +57,7 @@ export default function StreamerCard({username, avatar, isLive = false}: Streame
                     {isLive && (
                         <div
                             className="absolute bottom-[-6px] left-[-6px] w-[50%] h-[50%]  
-                            border-b-4 border-l-4 border-red-500 rounded-bl-full z-20 animate-pulse"
+                            border-b-4 border-l-4 border-green-500 rounded-bl-full z-20 animate-pulse"
                         />
                     )}
                 </div>
