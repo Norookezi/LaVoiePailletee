@@ -84,6 +84,8 @@ const TwitchStreamers: React.FC = () => {
                     ))
                 )}
             </div>
+
+            {error && <p className="text-red-500 text-center mt-4">{error}</p>}
         </div>
     );
 };
