@@ -121,11 +121,11 @@ const HomePage: React.FC = () => {
           <UserCard href="images/team/Petounio.webp" name="Petounio" job="Vice Président de l'association SolidariGames et Fondateur de la Voie Pailletée" />
           <UserCard href="images/team/Jimmy.webp" name="Jimmy" job="Trésorier" />
           <UserCard href="images/team/GeekLawliet.webp" name="GeekLawliet" job="Secrétaire" />
-          <UserCard href="images/team/MissVeronicaLife.webp" name="MissVeronicaLife" job="Responsable boutique" />
+          <UserCard href="images/team/MissVeronicaLife.webp" name="MissVeronicaLife" job="Responsable Boutique" />
           <UserCard href="images/team/Matsu.webp" name="Matsu" job="Responsable Modération" />
-          <UserCard href="images/team/Natiel.webp" name="Natiel" job="Responsable recrutement" />
-          <UserCard href="images/team/NobodyZ.webp" name="NobodyZ" job="Responsable artistique" />
-          <UserCard href="images/team/Valcka.webp" name="Valcka" job="Responsable réseaux sociaux" />
+          <UserCard href="images/team/Natiel.webp" name="Natiel" job="Responsable Recrutement" />
+          <UserCard href="images/team/NobodyZ.webp" name="NobodyZ" job="Responsable Artistique" />
+          <UserCard href="images/team/Valcka.webp" name="Valcka" job="Responsable Réseaux Sociaux" />
         </div>
         <div className="relative flex justify-center p-3 mx-auto mt-14 md:mt-52 w-fit">
           <img
