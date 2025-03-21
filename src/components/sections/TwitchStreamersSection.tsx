@@ -1,13 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Streamer } from "../../services/FetchStreamers";
 import StreamerCard from "../reusable-ui/StreamerCard";
+
+interface Streamer {
+    id: string;
+    name: string;
+    avatar: string;
+    isLive: boolean;
+}
 
 let fetchStreamersData: () => Promise<Streamer[]> | (() => Streamer[]);
 let getRequestCount: () => number;
 
 try {
-    fetchStreamersData = require("../../services/FetchStreamers").fetchStreamersData;
-    getRequestCount = require("../../services/RequestLogger").getRequestCount;
+    const fetchStreamersModule = require("../../services/FetchStreamers");
+    const requestLoggerModule = require("../../services/RequestLogger");
+
+    fetchStreamersData = fetchStreamersModule.fetchStreamersData;
+    getRequestCount = requestLoggerModule.getRequestCount;
 } catch (error) {
     console.warn("🚨 Les services API ne sont pas encore disponibles.");
     fetchStreamersData = (): Promise<Streamer[]> => Promise.resolve([]); // Mock si API non disponible
