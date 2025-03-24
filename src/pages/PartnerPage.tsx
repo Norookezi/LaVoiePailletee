@@ -5,7 +5,6 @@ import {
   IconDefinition,
 } from "@fortawesome/free-brands-svg-icons";
 import IconLink from "../components/reusable-ui/IconLink";
-import { Link } from "react-router-dom";
 import { partenaires } from "../partenaires";
 
 const title: string =
@@ -24,15 +23,12 @@ function makePartenaires(): JSX.Element[] {
   ): JSX.Element[] => {
     const elements: JSX.Element[] = socials.map((social) => {
       return (
-        <Link to={social.href} className="flex items-center text-black/50 lg:text-xl xl:text-2xl hover:!text-black/70 duration-300 transition-colors">
-          <span className="hidden font-kony">{social.name}</span> {/* lg:inline-block */}
           <IconLink
             icon={social.icon}
             link={social.href}
             name={social.name}
-            className={`text-black/50 hover:!text-black/70 lg:!text-inherit lg:[&>*]:hover:!scale-[1]  ${social.className}`}
+            className={`flex items-center text-black/50 lg:text-xl xl:text-2xl hover:!text-black/70 duration-300 transition-colors  ${social.className}`}
           />
-        </Link>
       );
     });
 
