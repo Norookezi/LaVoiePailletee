@@ -1,41 +1,22 @@
 import { JSX } from "react";
-import { Link } from "react-router-dom";
 import ImageLink from "../reusable-ui/ImageLink";
-
-interface Partner {
-    link: string;
-    img: string;
-    alt: string;
-}
+import { partenaires, partnerType } from "../../partenaires";
+import { Link } from "react-router-dom";
 
 export default function PartnerContainer():JSX.Element {
-    const partners: Partner[] = [
-        { link: "https://www.cybergrange.eu/", img: "la_cybergrange.webp", alt: "La CyberGrange" },
-        { link: "https://shadok-strasbourg.eu/", img: "le_shadok.webp", alt: "Le Shadok" },
-        { link: "https://eastgames.org/", img: "east_games.webp", alt: "East Games" },
-        { link: "https://www.getailicia.com/fr", img: "ai_licia.webp", alt: "Ai Licia" },
-        { link: "https://www.skillcamp.gg/", img: "skillcamp.webp", alt: "SkillCamp" },
-        { link: "https://www.ventdivin.com/", img: "vent_divin.webp", alt: "Vent Divin" },
-        { link: "#", img: "iconic.webp", alt: "Iconic" },
-        { link: "#", img: "level_gaming_corner.webp", alt: "Level Gaming Corner" },
-        { link: "#", img: "le_loup_des_balkans.webp", alt: "Le Loup des Balkans" },
-        { link: "#", img: "afb.webp", alt: "AFB" },
-        { link: "#", img: "epitech_strasbourg.webp", alt: "Epitech" }
-    ];
-
     // Les deux premiers partenaires mélangés entre eux
-    const fixedPartners: Partner[] = partners.slice(0, 2).sort(() => Math.random() - 0.5);
+    const fixedPartners: partnerType[] = partenaires.slice(0, 2).sort(() => Math.random() - 0.5);
 
     // Les autres partenaires restants
-    const remainingPartners: Partner[] = partners.slice(2);
+    const remainingPartners: partnerType[] = partenaires.slice(2);
 
     // Mélanger aléatoirement les partenaires restants
-    const randomPartners: Partner[] = remainingPartners
+    const randomPartners: partnerType[] = remainingPartners
         .sort(() => Math.random() - 0.5)
         .slice(0, 10);
 
     // Combiner les partenaires fixes et aléatoires
-    const displayPartners: Partner[] = [...fixedPartners, ...randomPartners];
+    const displayPartners: partnerType[] = [...fixedPartners, ...randomPartners];
 
     return(
         <section className="flex flex-col justify-center flex-1 py-10 text-center text-white shadow-2xl bg-crimson">
@@ -47,12 +28,12 @@ export default function PartnerContainer():JSX.Element {
 
                 <div className="flex flex-row flex-wrap gap-4 sm:px-[15vw] grid-cols-[repeat(auto-fit,minmax(120px,1fr))] 
                                place-items-center justify-center w-full md:grid-cols-6 md:px-0 sm:grid-cols-3 md:flex-1 lg:max-w-[70rem]">
-                    {displayPartners.map(({ link, img, alt }) => (
-                        <div key={alt} className="flex flex-col items-center justify-center">
+                    {displayPartners.map(({image, name }) => (
+                        <div key={name} className="flex flex-col items-center justify-center">
                             <ImageLink
-                                link={{ pathname: "/partenaires", hash: img.split('.')[0] }}
-                                imageSource={`images/partenaires/${img}`}
-                                imageAlt={alt}
+                                link={{ pathname: "/partenaires", hash: image.split('.')[0].split('/').slice(-1)[0] }}
+                                imageSource={image}
+                                imageAlt={name}
                             />
                         </div>
                     ))}
