@@ -11,17 +11,8 @@ interface Streamer {
 let fetchStreamersData: () => Promise<Streamer[]> | (() => Streamer[]);
 let getRequestCount: () => number;
 
-try {
-    const fetchStreamersModule = require("../../services/FetchStreamers");
-    const requestLoggerModule = require("../../services/RequestLogger");
-
-    fetchStreamersData = fetchStreamersModule.fetchStreamersData;
-    getRequestCount = requestLoggerModule.getRequestCount;
-} catch (error) {
-    console.warn("🚨 Les services API ne sont pas encore disponibles.");
-    fetchStreamersData = (): Promise<Streamer[]> => Promise.resolve([]); // Mock si API non disponible
-    getRequestCount = () => 0; // Mock si API non disponible
-}
+fetchStreamersData = (): Promise<Streamer[]> => Promise.resolve([]); // Mock si API non disponible
+getRequestCount = () => 0; // Mock si API non disponible
 
 const TwitchStreamers: React.FC = () => {
     const [streamers, setStreamers] = useState<Streamer[]>([]);
@@ -61,9 +52,9 @@ const TwitchStreamers: React.FC = () => {
     const offlineStreamers = streamers.filter((streamer) => !streamer.isLive);
 
     return (
-        <div className="mt-20 p-4 max-w-7xl mx-auto">
-            <h2 className="text-3xl uppercase text-center mb-4 text-crimson font-kony">🎥 Streamers en direct</h2>
-            <div className="flex flex-wrap gap-5 justify-center w-auto pt-10 mt-14 px-7 md:mt-10 md:px-20 mb-10">
+        <div className="p-4 mx-auto mt-20 max-w-7xl">
+            <h2 className="mb-4 text-3xl text-center uppercase text-crimson font-kony">🎥 Streamers en direct</h2>
+            <div className="flex flex-wrap justify-center w-auto gap-5 pt-10 mb-10 mt-14 px-7 md:mt-10 md:px-20">
                 {loading ? (
                     <h3 className="text-center text-xs sm:text-base md:text-lg lg:text-xl text-[#9c9898] font-kony">
                         Chargement des streamers...
@@ -79,8 +70,8 @@ const TwitchStreamers: React.FC = () => {
 
             <hr className="border-b-4 max-w-[75vw] w-auto mx-auto my-5 border-black/10" />
 
-            <h2 className="mt-10 text-3xl uppercase text-center mb-4 text-crimson font-kony">💤 Streamers hors ligne</h2>
-            <div className="flex flex-wrap gap-5 justify-center w-auto pt-10 mt-14 px-7 md:mt-10 md:px-20">
+            <h2 className="mt-10 mb-4 text-3xl text-center uppercase text-crimson font-kony">💤 Streamers hors ligne</h2>
+            <div className="flex flex-wrap justify-center w-auto gap-5 pt-10 mt-14 px-7 md:mt-10 md:px-20">
                 {loading ? (
                     <h3 className="text-center text-xs sm:text-base md:text-lg lg:text-xl text-[#9c9898] font-kony">
                         Chargement des streamers...
@@ -94,7 +85,7 @@ const TwitchStreamers: React.FC = () => {
                 )}
             </div>
 
-            {error && <p className="text-red-500 text-center mt-4">{error}</p>}
+            {error && <p className="mt-4 text-center text-red-500">{error}</p>}
         </div>
     );
 };
