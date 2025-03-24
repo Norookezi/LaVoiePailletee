@@ -1,8 +1,8 @@
 import React from "react";
-import Footer from "../components/Footer";
+import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import UserCard from "../components/reusable-ui/UserCard";
-import { Link } from 'react-router-dom';
+import Footer from "../components/Footer";
 import PartnerSection from "../components/sections/PartnerSection";
 
 const title: string = process.env["NODE_ENV"] === "development" ? "La voie pailletée (DEV)": "La voie pailletée";
@@ -46,11 +46,13 @@ const HomePage: React.FC = () => {
               Pleins de paillettes dans vos beaux yeux 👀
             </span>
           </div>
-          <div className="flex justify-end px-8 md:justify-start md:px-0">
-            <p className="px-3 py-2 text-white uppercase w-fit md:text-2xl font-kony rounded-xl bg-mediumseagreen">
-              + de 50 streamers<span className="md:hidden"> participent</span>
-            </p>
-          </div>
+          <Link to="/streamers">
+            <div className="flex justify-end px-8 md:justify-start md:px-0">
+              <p className="px-3 py-2 text-white uppercase w-fit md:text-2xl font-kony rounded-xl bg-mediumseagreen">
+                + de 50 streamers<span className="md:hidden"> participent</span>
+              </p>
+            </div>
+          </Link>
         </div>
       </section>
 
@@ -119,11 +121,11 @@ const HomePage: React.FC = () => {
           <UserCard href="images/team/Petounio.webp" name="Petounio" job="Vice Président de l'association SolidariGames et Fondateur de la Voie Pailletée" />
           <UserCard href="images/team/Jimmy.webp" name="Jimmy" job="Trésorier" />
           <UserCard href="images/team/GeekLawliet.webp" name="GeekLawliet" job="Secrétaire" />
-          <UserCard href="images/team/MissVeronicaLife.webp" name="MissVeronicaLife" job="Responsable boutique" />
+          <UserCard href="images/team/MissVeronicaLife.webp" name="MissVeronicaLife" job="Responsable Boutique" />
           <UserCard href="images/team/Matsu.webp" name="Matsu" job="Responsable Modération" />
-          <UserCard href="images/team/Natiel.webp" name="Natiel" job="Responsable recrutement" />
-          <UserCard href="images/team/NobodyZ.webp" name="NobodyZ" job="Responsable artistique" />
-          <UserCard href="images/team/Valcka.webp" name="Valcka" job="Responsable réseaux sociaux" />
+          <UserCard href="images/team/Natiel.webp" name="Natiel" job="Responsable Recrutement" />
+          <UserCard href="images/team/NobodyZ.webp" name="NobodyZ" job="Responsable Artistique" />
+          <UserCard href="images/team/Valcka.webp" name="Valcka" job="Responsable Réseaux Sociaux" />
         </div>
         <div className="relative flex justify-center p-3 mx-auto mt-14 md:mt-52 w-fit">
           <img

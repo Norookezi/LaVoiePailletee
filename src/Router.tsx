@@ -4,6 +4,7 @@ import Cookies from "universal-cookie";
 
 import ErrorPage from "./pages/ErrorPage";
 import HomePage from "./pages/HomePage";
+import StreamersPage from "./pages/StreamersPage";
 import ReactGA from "react-ga4";
 import PartnerPage from "./pages/PartnerPage";
 
@@ -58,6 +59,7 @@ const App: React.FC = () => {
         <Route path="*" element={<ErrorPage />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/partenaires" element={<PartnerPage />} />
+        <Route path="/streamers" element={<StreamersPage />} />
       </Routes>
     </Router>
   );

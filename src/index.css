@@ -11,3 +11,12 @@
   font-family: "roboto";
   src: local("roboto"), url("/public/fonts/Roboto.ttf");
 }
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
