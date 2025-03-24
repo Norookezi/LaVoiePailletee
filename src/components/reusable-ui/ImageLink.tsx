@@ -12,7 +12,6 @@ export default function ImageLink({ link, imageSource, imageAlt, className }: Im
     return(
         <Link
             to={link}
-            target="_blank"
             rel="noopener noreferrer"
             className="flex flex-col items-center justify-between transition-transform transform hover:scale-105
                        w-[clamp(150px,12vw,150px)] h-full flex-shrink-0"
