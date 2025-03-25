@@ -77,7 +77,7 @@ const TwitchStreamers: React.FC = () => {
                         Chargement des streamers...
                     </h3>
                 ) : offlineStreamers.length === 0 ? (
-                    <h3 className="text-center text-xs sm:text-base md:text-lg lg:text-xl text-[#9c9898] font-kony">Aucun streameur "Hors lLigne" actuellement</h3>
+                    <h3 className="text-center text-xs sm:text-base md:text-lg lg:text-xl text-[#9c9898] font-kony">Aucun streameur "Hors Ligne" actuellement</h3>
                 ) : (
                     offlineStreamers.map((streamer) => (
                         <StreamerCard key={streamer.id} username={streamer.name} avatar={streamer.avatar} />
