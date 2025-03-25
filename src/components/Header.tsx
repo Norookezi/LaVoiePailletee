@@ -1,29 +1,28 @@
-import React from 'react';
+import React from "react";
 import { Link } from "react-router-dom";
 
 const Header: React.FC = () => {
   return (
-    <header className='relative flex justify-center overflow-clip'>
+    <header className="relative overflow-clip">
       <img
-        className='absolute object-cover w-screen h-full -z-50'
-        src='images/degrade.webp'
-        alt='Gradient background'
+        className="absolute object-cover w-screen h-full -z-50"
+        src="images/degrade.webp"
+        alt="Gradient background"
       />
 
       {/* Conteneur Flex pour le logo et le titre */}
       <div className="flex flex-col items-center justify-between w-full h-full px-4 md:flex-row sm:px-8 md:px-16">
-        
         {/* Logo à gauche */}
         <Link to="/">
           <img
-            className="w-auto max-w-[140px] sm:max-w-[180px] md:max-w-[180px] lg:max-w-[200px] xl:max-w-[250px] h-auto z-50"
+            className="md:left-[2.5vw] md:absolute md:top-1/2 md:-translate-y-1/2 w-auto max-w-36 sm:max-w-44 lg:max-w-48 h-auto z-50"
             src="images/lvp_colored.webp"
             alt="logo"
           />
         </Link>
 
         {/* Titre centré sous le logo */}
-        <div className="flex items-center justify-center w-full pt-12 md:pt-24 pb-16 text-center text-white font-kony text-[3em] z-10">
+        <div className="flex items-center justify-center w-full md:pt-24 pb-10 md:pb-16 leading-none text-center text-white font-kony text-[3em] z-10">
           <h1>La voie Pailletée</h1>
         </div>
       </div>
