@@ -13,18 +13,15 @@ export default function ImageLink({ link, imageSource, imageAlt, className }: Im
         <Link
             to={link}
             rel="noopener noreferrer"
-            className="flex flex-col items-center justify-between transition-transform transform hover:scale-105
-                       w-[clamp(150px,12vw,150px)] h-full flex-shrink-0"
+            className="flex flex-col items-center justify-between transition-transform transform hover:scale-105 min-w-[150px] w-[12vw] max-w-[150px] h-full flex-shrink-0"
             reloadDocument 
         >
             {/* Conteneur de l'image */}
-            <div className="w-full h-full bg-white bg-opacity-40 rounded-full shadow-md
-                            overflow-hidden flex items-center justify-center w-[clamp(120px, 20vw, 150px)]"
-                 style={{ height: "clamp(120px, 20vw, 150px)", width: "clamp(120px, 20vw, 150px)" }}>
+            <div className="flex items-center justify-center overflow-hidden bg-white rounded-full shadow-md bg-opacity-40 min-w-[120px] w-[20vw] max-w-[150px] min-h-[120px] h-[20vw] max-h-[150px]">
                 <img
                     src={imageSource}
                     alt={imageAlt}
-                    className="p-5 w-[clamp(60%, 70%, 80%)] h-[clamp(60%, 70%, 80%)] object-contain transition-opacity duration-300 hover:opacity-80"
+                    className="p-5 w-[90%] h-[90%] object-contain transition-opacity duration-300 hover:opacity-80"
                 />
             </div>
 
