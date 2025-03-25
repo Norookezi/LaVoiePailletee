@@ -1,4 +1,5 @@
-import React, { JSX } from "react";
+import React, { JSX, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import {
@@ -36,7 +37,7 @@ function makePartenaires(): JSX.Element[] {
   };
   const Elements: JSX.Element[] = partenaires.map((partenaire) => {
     return (
-      <div className="w-auto py-6 group max-w-[75rem]" id={partenaire.name.replace(/ /g,"_")}>
+      <div key={partenaire.name} className="w-auto py-6 group max-w-[75rem]" id={partenaire.name.replace(/ /g,"_")}>
         <div className="flex-[2] md:flex md:group-even:flex-row-reverse justify-between w-auto h-full bg-white p-10 pb-0 md:p-2 shadow-lg shadow-gray-500/50 rounded-xl group-odd:text-right relative">
           <div className="absolute top-0 flex-1 p-10 overflow-hidden md:flex-none md:relative md:p-0 max-sm:!left-1/2 max-sm:top-0 max-sm:-translate-x-1/2 translate-x-[33%] group-even:right-0 group-odd:-translate-x-[52%] -translate-y-1/3 h-52 w-52 lg:w-[15rem] lg:h-[15rem] xl:h-[20rem] xl:w-[20rem] 2xl:w-[25rem] 2xl:h-[25rem]  max-h-full lg:p-4 md:!translate-x-0 md:!translate-y-0">
             <img
@@ -64,7 +65,32 @@ function makePartenaires(): JSX.Element[] {
   return Elements;
 }
 
+const scrollToAnchor = (hash: string): void => {
+  // Si aucun hash n'est fourni, on ne fait rien.
+  if (!hash) return;
+
+  // Supprime le "#" pour obtenir l'ID de l'élément cible.
+  const id = hash.replace("#", "");
+  
+  setTimeout(() => {
+    const element = document.getElementById(id);
+    if (element) {
+      // Fait défiler la page jusqu'à l'élément avec un effet fluide.
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    // Délai de 100ms pour s'assurer que le DOM est bien chargé avant d'exécuter le scroll.
+  }, 100);
+};
+
 const PartnerPage: React.FC = () => {
+  // Permet d'obtenir l'URL actuelle (y compris le hash "#monPartenaire").
+  const location = useLocation();
+
+  // Appelle `scrollToAnchor` à chaque changement de l'URL.
+  useEffect(() => {
+    scrollToAnchor(location.hash);
+  }, [location]);
+  
   return (
     <main className="flex flex-col h-full min-h-screen overflow-x-hidden">
       <title>{title}</title>
