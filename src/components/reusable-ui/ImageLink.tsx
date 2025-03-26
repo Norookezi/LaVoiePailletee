@@ -15,12 +15,13 @@ export default function ImageLink({ link, imageSource, imageAlt, className }: Im
             rel="noopener noreferrer"
             className="flex flex-col items-center justify-between transition-transform transform hover:scale-105 min-w-[150px] w-[12vw] max-w-[150px] h-full flex-shrink-0"
             reloadDocument 
+            aria-hidden="true"
         >
             {/* Conteneur de l'image */}
             <div className="flex items-center justify-center overflow-hidden bg-white rounded-full shadow-md bg-opacity-40 min-w-[120px] w-[20vw] max-w-[150px] min-h-[120px] h-[20vw] max-h-[150px]">
                 <img
                     src={imageSource}
-                    alt={imageAlt}
+                    alt={`Logo de notre partenaires ${imageAlt}`}
                     className="p-5 w-[90%] h-[90%] object-contain transition-opacity duration-300 hover:opacity-80"
                 />
             </div>

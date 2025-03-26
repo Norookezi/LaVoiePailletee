@@ -32,11 +32,11 @@ const ErrorPage: React.FC = () => {
             <Header />
 
             {/* Error Section */}
-            <section className="flex flex-col items-center justify-center flex-grow text-center p-6">
-                <h1 className="text-4xl font-bold text-red-500 uppercase font-kony">Erreur {errorStatus}</h1>
+            <section className="flex flex-col items-center justify-center flex-grow p-6 text-center">
+                <h1 className="text-4xl font-bold text-red-500 uppercase font-kony" role="text">Erreur {errorStatus}</h1>
                 <p className="text-xl text-gray-700 font-roboto">{errorMessage}</p>
                 <div className="mt-4">
-                    <Link to="/">
+                    <Link to="/" role="button" aria-label="Bouton de retour a l'acceuil">
                         <div className="flex justify-end px-8 md:justify-start md:px-0">
                             <p className="px-3 py-2 text-white uppercase w-fit md:text-2xl font-kony rounded-xl bg-mediumseagreen">
                                 Retour à l'accueil

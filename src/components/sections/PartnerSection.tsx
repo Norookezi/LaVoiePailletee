@@ -21,7 +21,7 @@ export default function PartnerContainer():JSX.Element {
     return(
         <section className="flex flex-col justify-center flex-1 py-10 text-center text-white shadow-2xl bg-crimson">
             <div className="flex flex-col md:items-center md:justify-evenly md:mx-10">
-                <h2 className="p-5 mb-10 text-4xl tracking-wide text-center break-words whitespace-normal md:text-5xl md:whitespace-nowrap font-kony">
+                <h2 className="p-5 mb-10 text-4xl tracking-wide text-center break-words whitespace-normal md:text-5xl md:whitespace-nowrap font-kony" role="text">
                     <span>Partenaires de</span>
                     <span className="ml-4 max-2xl:block">l'évènement</span>
                 </h2>
@@ -29,7 +29,7 @@ export default function PartnerContainer():JSX.Element {
                 <div className="flex flex-row flex-wrap gap-4 sm:px-[15vw] grid-cols-[repeat(auto-fit,minmax(120px,1fr))] 
                                place-items-center justify-center w-full md:grid-cols-6 md:px-0 sm:grid-cols-3 md:flex-1 lg:max-w-[70rem]">
                     {displayPartners.map(({image, name }) => (
-                        <div key={name} className="flex flex-col items-center justify-center">
+                        <div key={name} className="flex flex-col items-center justify-center" role="button" aria-label={`Lien vers le profile de ${name}`}>
                             <ImageLink
                                 link={{ pathname: "/partenaires", hash: image.split('.')[0].split('/').slice(-1)[0] }}
                                 imageSource={image}

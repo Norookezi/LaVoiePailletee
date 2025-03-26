@@ -7,17 +7,18 @@ const Header: React.FC = () => {
       <img
         className="absolute object-cover w-screen h-full -z-50"
         src="images/degrade.webp"
-        alt="Gradient background"
+        aria-hidden="true"
       />
 
       {/* Conteneur Flex pour le logo et le titre */}
       <div className="flex flex-col items-center justify-between w-full h-full px-4 md:flex-row sm:px-8 md:px-16">
         {/* Logo à gauche */}
-        <Link to="/">
+        <Link to="/" aria-label="Bouton retour a l'acceuil" role="button">
           <img
             className="md:left-[2.5vw] md:absolute md:top-1/2 md:-translate-y-1/2 w-auto max-w-36 sm:max-w-44 lg:max-w-48 h-auto z-50"
             src="images/lvp_colored.webp"
-            alt="logo"
+            alt="Logo de l'évènement la voie pailletée"
+            aria-hidden="true"
           />
         </Link>
 
