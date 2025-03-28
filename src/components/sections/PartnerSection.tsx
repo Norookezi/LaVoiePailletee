@@ -39,7 +39,7 @@ export default function PartnerContainer():JSX.Element {
                                place-items-center justify-center w-full md:grid-cols-6 md:px-0 sm:grid-cols-3 md:flex-1 lg:max-w-[70rem]">
                   
                     {displayPartners.map(({image, name, className }) => (
-                        <div key={name} className={`flex flex-col items-center justify-center`} role="button" aria-label={`Lien vers le profile de ${name}`>
+                        <div key={name} className={`flex flex-col items-center justify-center`} role="button" aria-label={`Lien vers le profile de ${name}`}>
 
                             <ImageLink
                                 link={{ 

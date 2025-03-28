@@ -12,7 +12,7 @@ const title: string =
     : "La voie pailletée";
 
 
-    function makePartenaires(partenaires: partnerType[]): JSX.Element[] {
+  function makePartenaires(partenaires: partnerType[]): JSX.Element[] {
   const social = (
     socials: {
       name: string;
@@ -58,11 +58,10 @@ const title: string =
             </div>
           </div>
         </div>
-      </div>)
+      </div>
     );
   });
-
-  return Elements;
+    return Elements;
 }
 
 const scrollToAnchor = (hash: string): void => {
