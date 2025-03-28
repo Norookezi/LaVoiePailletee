@@ -53,7 +53,7 @@ const TwitchStreamers: React.FC = () => {
 
     return (
         <div className="p-4 mx-auto mt-20 max-w-7xl">
-            <h2 className="mb-4 text-3xl text-center uppercase text-crimson font-kony">🎥 Streamers en direct</h2>
+            <h2 className="mb-4 text-3xl text-center uppercase text-crimson font-kony"><span aria-hidden="true">🎥</span> Streamers en direct</h2>
             <div className="flex flex-wrap justify-center w-auto gap-5 pt-10 mb-10 mt-14 px-7 md:mt-10 md:px-20">
                 {loading ? (
                     <h3 className="text-center text-xs sm:text-base md:text-lg lg:text-xl text-[#9c9898] font-kony">
@@ -70,7 +70,7 @@ const TwitchStreamers: React.FC = () => {
 
             <hr className="border-b-4 max-w-[75vw] w-auto mx-auto my-5 border-black/10" />
 
-            <h2 className="mt-10 mb-4 text-3xl text-center uppercase text-crimson font-kony">💤 Streamers hors ligne</h2>
+            <h2 className="mt-10 mb-4 text-3xl text-center uppercase text-crimson font-kony"><span aria-hidden="true">💤</span> Streamers hors ligne</h2>
             <div className="flex flex-wrap justify-center w-auto gap-5 pt-10 mt-14 px-7 md:mt-10 md:px-20">
                 {loading ? (
                     <h3 className="text-center text-xs sm:text-base md:text-lg lg:text-xl text-[#9c9898] font-kony">

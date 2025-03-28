@@ -7,10 +7,11 @@ interface IconLinkProps {
     link: string;
     icon: IconDefinition;
     className?: string;
-    name?: string
+    name?: string;
+    label?: string;
 }
 
-export default function IconLink({ link, icon, className, name }: IconLinkProps): JSX.Element {
+export default function IconLink({ link, icon, className, name, label }: IconLinkProps): JSX.Element {
 
     return (
       (<Link
@@ -19,7 +20,7 @@ export default function IconLink({ link, icon, className, name }: IconLinkProps)
         rel="noopener noreferrer"
         className={`flex items-center justify-center w-12 h-12 ${className ?? 'hover:text-[#ef476f] text-white'}`}
         title={name}
-        aria-label={`Lien vers ${name}`}
+        aria-label={label}
       >
         <FontAwesomeIcon 
           icon={icon}

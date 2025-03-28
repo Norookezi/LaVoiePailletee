@@ -14,10 +14,10 @@ const StreamersPage: React.FC = () => {
         <Header />
 
         {/* Page Section */}
-        <section className="relative bg-white flex flex-col">
+        <section className="relative flex flex-col bg-white">
             <div className="justify-center p-3 mx-auto mt-14 md:mt-20 w-fit">
             <h2 className="uppercase text-center text-crimson font-kony break-all 
-                    text-sm sm:text-lg md:text-4xl lg:text-6xl w-auto md:w-auto md:max-w-[50vw] leading-[2.5rem]">
+                    text-sm sm:text-lg md:text-4xl lg:text-6xl w-auto md:w-auto md:max-w-[50vw] leading-[2.5rem]" aria-label="Streameurs et streameuses">
                     Les Streameur.euse.s
                 </h2>
             </div>

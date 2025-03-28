@@ -43,22 +43,22 @@ const title: string =
             <img
               className={`object-contain w-auto h-full p-3 shadow-lg md:shadow-none bg-crimson rounded-xl overflow-hidden aspect-square shadow-gray-500 ${partenaire.className}`}
               src={partenaire.image}
-              alt={partenaire.name}
+              alt={`Logo ${partenaire.name}`}
             />
           </div>
           <div className="max-sm:pt-16 max-sm:!m-0 max-sm:justify-center max-sm:text-center group-odd:ml-[4rem] lg:p-4 lg:pt-10 lg:flex flex-col justify-start group-even:mr-[4rem]">
             <span className="text-3xl md:text-4xl font-kony text-crimson lg:text-5xl">
               {partenaire.name}
             </span>
-            <p className="text-start lg:text-2xl xl:text-2xl font-roboto" dangerouslySetInnerHTML={{__html: partenaire.description.replace(/\n/g, "</br>")}}>
-              
+            <p className="text-start lg:text-2xl xl:text-2xl font-roboto" role="text" >
+              {partenaire.description}
             </p>
             <div className="flex p-3 mt-auto group-odd:justify-end"> 
               {partenaire.socials ? social(partenaire.socials) : ""}
             </div>
           </div>
         </div>
-      </div>
+      </div>)
     );
   });
 
