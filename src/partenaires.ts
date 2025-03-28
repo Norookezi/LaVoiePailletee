@@ -19,7 +19,7 @@ export interface partnerType {
 const sheetConfig: GoogleSheetConfig = {
   sheetId: "1ggCnsqJmcA-Xxjv50NV_P9pqIZf9tc2rCz6PaYhZzNY", 
   sheetGids: [412412823],
-  columns: "A,B,C,D",
+  columns: "A:D",
   returnObjects: true,
 };
 
@@ -47,7 +47,7 @@ export const getPartenaires = async (): Promise<partnerType[]> => {
 
           if (match && match[1]) {
             const fileId = match[1];
-            imageUrl = `https://drive.google.com/thumbnail?id=${fileId}&export=view&authuser=0`;
+            imageUrl = `https://lh3.googleusercontent.com/d/${fileId}=s640`;
           }
         } else {
           // another image link, just display it
@@ -63,6 +63,7 @@ export const getPartenaires = async (): Promise<partnerType[]> => {
         className: partner.style || "",
       };
     });
+    console.log(data);
   } catch (error) {
     console.error("Erreur lors de la récupération des données : ", error);
   }
