@@ -5,136 +5,134 @@ import axios from "axios";
  */
 export interface GoogleSheetConfig {
     sheetId: string;
+    sheetGids?: number[];
     columns?: string;
-    rows?: string;    
+    rows?: string;
+    returnObjects?: boolean;
 }
-
-
 
 /**
  * Récupère des données spécifiques d'un Google Sheet sous forme de tableau de strings.
- * @param config Configuration contenant l'ID de la feuille, les colonnes et les lignes.
- * @returns Un tableau de données.
+ * @param config Configuration contenant l'ID de la feuille, les colonnes, les lignes et les GID.
+ * @returns Un tableau de données combinées de toutes les feuilles demandées.
  */
-export async function fetchGoogleSheetData(config: GoogleSheetConfig): Promise<string[]> {
+export interface GoogleSheetConfig {
+    sheetId: string;
+    sheetGids?: number[]; // GIDs des feuilles à récupérer
+    columns?: string; // Colonnes à récupérer (ex: "A,C,D")
+    rows?: string; // Plages de lignes à récupérer (optionnel)
+    returnObjects?: boolean; // Si true, retour sous forme d'objet avec les en-têtes comme clés
+}
+
+/**
+ * Fonction qui vérifie si une chaîne est une URL d'image valide.
+ */
+function isImageUrl(url: string): boolean {
+    return /\.(jpg|jpeg|png|gif|bmp|tiff|webp)$/i.test(url);
+}
+
+/**
+ * Récupère des données spécifiques d'un Google Sheet sous forme de tableau de strings.
+ * @param config Configuration contenant l'ID de la feuille, les colonnes, les lignes et les GID.
+ * @returns Un tableau de données combinées de toutes les feuilles demandées.
+ */
+export async function fetchGoogleSheetData(
+    config: GoogleSheetConfig
+): Promise<string[] | { [key: string]: string }[]> {
     try {
-        const { sheetId, columns, rows } = config;
+        const { sheetId, columns, rows, sheetGids, returnObjects = false } = config;
 
         let range = "";
 
-        // Cas où ni les colonnes ni les lignes ne sont spécifiées
+        // Gestion de la plage de données (colonnes/lignes)
         if (!columns && !rows) {
-            range = "A:Z";  // Toute la feuille
-        }
-
-        // Cas où les colonnes sont spécifiées mais pas les lignes
-        else if (columns && !rows) {
-            const columnsArray = columns.split(',').map(col => col.trim()); // Séparateur "," pour les colonnes
+            range = "A:Z"; // Toute la feuille
+        } else if (columns && !rows) {
+            range = columns
+                .split(",")
+                .map(col => col.trim())
+                .map(col => (col.includes(":") ? col : `${col}:${col}`))
+                .join(",");
+        } else if (!columns && rows) {
+            range = rows
+                .split(",")
+                .map(row => row.trim())
+                .map(row => (row.includes(":") ? `A${row}:Z${row}` : `A${row}:Z${row}`))
+                .join(",");
+        } else if (columns && rows) {
+            const columnsArray = columns.split(",").map(col => col.trim());
+            const rowsArray = rows.split(",").map(row => row.trim());
             range = columnsArray
-                .map(col => {
-                    if (col.includes(':')) {
-                        return col; // Plage de colonnes (ex: A:C)
-                    } else {
-                        return `${col}:${col}`; // Une seule colonne (ex: A)
-                    }
-                })
-                .join(',');  // Joindre les différentes plages de colonnes par des virgules
+                .map(col =>
+                    rowsArray
+                        .map(row => (row.includes(":") ? `${col}${row}` : `${col}${row}:${col}${row}`))
+                        .join(",")
+                )
+                .join(",");
         }
 
-        // Cas où les lignes sont spécifiées mais pas les colonnes
-        else if (!columns && rows) {
-            const rowsArray = rows.split(',').map(row => row.trim()); // Séparateur "," pour les lignes
-            range = rowsArray
+        // Liste des `gid` à traiter (si aucune n'est renseignée, prendre `gid=0` par défaut)
+        const gids = sheetGids && sheetGids.length > 0 ? sheetGids : [0];
+
+        let allData: string[] | { [key: string]: string }[] = [];
+
+        for (const gid of gids) {
+            const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&range=${range}&gid=${gid}`;
+            const response = await axios.get<string>(url);
+
+            if (response.data.includes(")]}")) {
+                const errorMessage = response.data.split(")]}")[1];
+                throw new Error(`Erreur API Google Sheets : ${errorMessage}`);
+            }
+
+            // Manipulation de la donnée pour éviter le découpage incorrect
+            const rowsData: string[][] = response.data
+                .trim()
+                .split("\n")
                 .map(row => {
-                    if (row.includes(':')) {
-                        const [startRow, endRow] = row.split(':');
-                        return `A${startRow}:Z${endRow}`; // Plage de lignes (ex: 1:4)
-                    } else {
-                        return `A${row}:Z${row}`; // Une seule ligne (ex: 1)
-                    }
-                })
-                .join(',');  // Joindre les différentes plages de lignes par des virgules
+                    // Utilisation de regex pour gérer les champs contenant des virgules et des guillemets
+                    const regex = /(?:,)(?=(?:(?:[^"]*"){2})*[^"]*$)/g;
+                    return row.split(regex).map(value => value.replace(/(^"|"$)/g, "").trim());
+                });
+
+            // Séparation correcte des colonnes
+            if (returnObjects) {
+                const headers = rowsData.shift(); // Première ligne = en-têtes
+                if (!headers) throw new Error("Impossible de récupérer les en-têtes de la feuille.");
+
+                // Récupération des données sous forme d'objets avec des en-têtes comme clés
+                const objectsData = rowsData.map(row =>
+                    headers.reduce<{ [key: string]: string }>((acc, header, index) => {
+                        // Si une cellule contient une URL d'image, on la retourne telle quelle
+                        const cellValue = row[index] || "";
+                        acc[header] = isImageUrl(cellValue) ? cellValue : cellValue;
+                        return acc;
+                    }, {}));
+
+                allData = [...(allData as { [key: string]: string }[]), ...objectsData];
+            } else {
+                // Concatenate the rows into one flat list of strings
+                const flattenedData = rowsData.map(row =>
+                    row.map(cell => {
+                        const cellValue = cell.trim();
+                        return isImageUrl(cellValue) ? cellValue : cellValue;
+                    })
+                );
+
+                // On récupère chaque colonne séparément sans fusionner
+                const columnsArray = columns?.split(",").map(col => col.trim()) || [];
+
+                const separatedColumns = columnsArray.map((column, colIndex) => {
+                    return flattenedData.map(row => row[colIndex] || "");
+                });
+
+                allData = [...(allData as string[]), ...separatedColumns.flat()];
+            }
         }
 
-        // Cas où les colonnes et les lignes sont spécifiées
-        else if (columns && rows) {
-            const columnsArray = columns.split(',').map(col => col.trim()); // Séparateur "," pour les colonnes
-            const rowsArray = rows.split(',').map(row => row.trim()); // Séparateur "," pour les lignes
-
-            // Construire une plage combinée (ex: A1, A2, B1, B2, ...)
-            const ranges = columnsArray.map(col => {
-                return rowsArray.map(row => {
-                    if (row.includes(':')) {
-                        const [startRow, endRow] = row.split(':');
-                        return `${col}${startRow}:${col}${endRow}`;  // Plage de lignes pour chaque colonne (ex: A2:A4)
-                    } else {
-                        return `${col}${row}:${col}${row}`;  // Une seule cellule pour chaque colonne (ex: A2:A2)
-                    }
-                }).join(','); // Joindre toutes les lignes pour une colonne
-            }).join(','); // Joindre toutes les colonnes
-
-            range = ranges; // Plage combinée
-        }
-
-        // Si la plage est plus complexe et inclut des colonnes multiples (ex: A:C), formater de manière correcte
-        if (columns && rows && columns.includes(":")) {
-            const columnsArray = columns.split(',');
-            const colRange = columnsArray.map(col => {
-                if (col.includes(":")) {
-                    const [startCol, endCol] = col.split(":");
-                    const colStartCode = startCol.charCodeAt(0);
-                    const colEndCode = endCol.charCodeAt(0);
-
-                    // Générer toutes les colonnes entre startCol et endCol
-                    const colLetters = [];
-                    for (let i = colStartCode; i <= colEndCode; i++) {
-                        colLetters.push(String.fromCharCode(i));
-                    }
-                    return colLetters.join(',');
-                } else {
-                    return col;
-                }
-            }).join(',');
-
-            const rowsArray = rows.split(',').map(row => row.trim()); // Séparateur "," pour les lignes
-            const ranges = colRange.split(',').map(col => {
-                return rowsArray.map(row => {
-                    if (row.includes(':')) {
-                        const [startRow, endRow] = row.split(':');
-                        return `${col}${startRow}:${col}${endRow}`;  // Plage de lignes pour chaque colonne (ex: A2:A4)
-                    } else {
-                        return `${col}${row}:${col}${row}`;  // Une seule cellule pour chaque colonne (ex: A2:A2)
-                    }
-                }).join(',');
-            }).join(',');
-
-            range = ranges;
-        }
-
-        // Construire l'URL avec la plage spécifiée
-        const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&range=${range}`;
-
-        const response = await axios.get(url);
-
-        // Vérification si une erreur interne est déclenchée par l'API Google Sheets
-        if (response.data.includes(")]}")) {
-            const errorMessage = response.data.split(")]}")[1];
-            throw new Error(`Erreur API Google Sheets : ${errorMessage}`);
-        }
-
-        // Transformation du CSV en tableau de lignes et colonnes
-        const rowsData: string[][] = response.data
-            .trim()
-            .split("\n")
-            .map((row: string) => row.split(",").map(value => value.replace(/(^"|"$)/g, "")));
-
-        // Aplatir le tableau de tableaux en un tableau simple et éliminer les valeurs vides
-        const flattenedData = rowsData.flat().filter(item => item.trim() !== "");
-
-        return flattenedData;
-    } catch (error: any) {
-        // Log l'erreur et retourne un tableau vide
-        console.error("❌ Erreur lors de la récupération des données Google Sheet:", error.message || error);
+        return allData; // Retourne les données sans modification
+    } catch (error) {
+        console.error("❌ Erreur lors de la récupération des données Google Sheets:", error);
         return [];
     }
 }
