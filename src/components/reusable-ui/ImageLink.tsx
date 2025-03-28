@@ -21,7 +21,7 @@ export default function ImageLink({ link, imageSource, imageAlt, className }: Im
             <div className={`flex items-center justify-center overflow-hidden bg-white rounded-full shadow-md bg-opacity-40 min-w-[120px] w-[20vw] max-w-[150px] min-h-[120px] h-[20vw] max-h-[150px] ${className}`}>
                 <img
                     src={imageSource}
-                    alt={`Logo de notre partenaires ${imageAlt}`}
+                    alt={`Logo ${imageAlt}`}
                     className="p-5 w-[90%] h-[90%] object-contain transition-opacity duration-300 hover:opacity-80"
                 />
             </div>
