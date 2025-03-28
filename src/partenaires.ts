@@ -1,5 +1,7 @@
+import { fetchGoogleSheetData, GoogleSheetConfig } from "./services/FetchGoogleSheets";
 import { IconDefinition } from "@fortawesome/free-brands-svg-icons";
 
+// Type for partner
 export interface partnerType {
   name: string;
   image: string;
@@ -13,78 +15,56 @@ export interface partnerType {
   }[];
 }
 
-export const partenaires: partnerType[] = [
-  {
-    name: "le shadok",
-    image: "/images/partenaires/le_shadok.webp",
-    description:
-      "married massage lose human queen if slow inch run hungry quarter improve little useful tell attached leather when thou loose official appropriate sale specific",
-  },
-  {
-    name: "la cybergrange",
-    image: "/images/partenaires/la_cybergrange.webp",
-    description:
-      "contrast mill according shot answer rock strip human certain gave strength applied earlier monkey almost over occasionally consist plain poet fully man blow wish",
-  },
-  {
-    name: "le loup des balkans",
-    image: "/images/partenaires/le_loup_des_balkans.webp",
-    description:
-      "war shore everybody mice rising brown night how warm roll imagine while until instance dug division girl sit race fence check palace surface influence.\ncow government body oxygen easily street war age baby climate coat point hollow wore bare sale music enter chemical rising tightly noise excellent practice",
-  },
-  {
-    name: "epitech strasbourg",
-    image: "/images/partenaires/epitech_strasbourg.webp",
-    description:
-      "zoo giving fort automobile almost single supper date roar happened mood mine tune plus cave softly slipped sunlight asleep factor figure sit where certain",
-    className: "!bg-blue-700",
-  },
-  {
-    name: "level gaming corner",
-    image: "/images/partenaires/level_gaming_corner.webp",
-    description:
-      "image happy practical fed met sister cost several for itself thee on came smoke cattle let raw peace poem remain terrible nuts select willing",
-  },
-  {
-    name: "afb",
-    image: "/images/partenaires/afb.webp",
-    description:
-      "scared statement raise after transportation mine past country fact for society one exclaimed lonely shoot travel different page combination dress bank sheet take simple",
-  },
-  {
-    name: "ai licia",
-    image: "/images/partenaires/ai_licia.webp",
-    description:
-      "do changing nervous single mouth call station them sick printed flat teach environment lamp sink hardly create wonderful younger night age together nor prize",
-  },
-  {
-    name: "east games",
-    image: "/images/partenaires/east_games.webp",
-    description:
-      "balance just price brush coat everybody before blue close equally rough turn book pure slope sing spider enjoy thread broad nearer warm heart related",
-  },
-  {
-    name: "hotel graffalgar",
-    image: "/images/partenaires/hotel_graffalgar.webp",
-    description:
-      "doubt brown selection have including exciting sick they theory basic thank definition frame movement route fast create entire ago lost stronger proud however slide",
-  },
-  {
-    name: "iconic",
-    image: "/images/partenaires/iconic.webp",
-    description:
-      "distant tales getting garage feature popular captured public official put wonderful pencil rubber although century lead clay silly music tropical lunch practical yard bone",
-  },
-  {
-    name: "skillcamp",
-    image: "/images/partenaires/skillcamp.webp",
-    description:
-      "combination subject cold clock bus slipped angle leaving pass form fruit hall vowel load account fellow pound headed desk race swept creature pressure harder",
-  },
-  {
-    name: "vent divin",
-    image: "/images/partenaires/vent_divin.webp",
-    description:
-      "come afternoon scared team grade you hung pilot ill pan recognize attached feed had rubbed mine original wealth village people heavy flame moon cut",
-  },
-];
+// Configuration of googleSheet api call
+const sheetConfig: GoogleSheetConfig = {
+  sheetId: "1ggCnsqJmcA-Xxjv50NV_P9pqIZf9tc2rCz6PaYhZzNY", 
+  sheetGids: [412412823],
+  columns: "A,B,C,D",
+  returnObjects: true,
+};
+
+// Dynamically get partners and return it
+export const getPartenaires = async (): Promise<partnerType[]> => {
+  // Object initialization
+  let partners: partnerType[] = [];
+  try {
+    // Fetch datas
+    const data = await fetchGoogleSheetData(sheetConfig);
+
+    // Map all data
+    partners = data.map((partner: any) => {
+      // Default image path
+      let imageUrl = `${window.location.origin}/images/partenaires/default-image.webp`;
+
+      // Check if image header is not empty or "N/A"
+      if (partner.image && partner.image !== "N/A" && partner.image.trim() !== "") {
+        const imageLink = partner.image.trim();
+        
+        // If image is from google drive, convert it for display
+        if (imageLink.includes("drive.google.com")) {
+          const regex = /https:\/\/drive\.google\.com\/file\/d\/([^/]+)/;
+          const match = imageLink.match(regex);
+
+          if (match && match[1]) {
+            const fileId = match[1];
+            imageUrl = `https://drive.google.com/thumbnail?id=${fileId}&export=view&authuser=0`;
+          }
+        } else {
+          // another image link, just display it
+          imageUrl = imageLink;
+        }
+      }
+
+      // return of all datas
+      return {
+        name: partner.nom || "Nom inconnu",
+        image: imageUrl,
+        description: partner.description || "Description manquante",
+        className: partner.style || "",
+      };
+    });
+  } catch (error) {
+    console.error("Erreur lors de la récupération des données : ", error);
+  }
+  return partners;
+};

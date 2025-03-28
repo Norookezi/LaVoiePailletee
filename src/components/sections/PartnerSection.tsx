@@ -1,9 +1,19 @@
-import { JSX } from "react";
+import { JSX, useState, useEffect } from "react";
 import ImageLink from "../reusable-ui/ImageLink";
-import { partenaires, partnerType } from "../../partenaires";
+import { getPartenaires, partnerType } from "../../partenaires";
 import { Link } from "react-router-dom";
 
 export default function PartnerContainer():JSX.Element {
+    const [partenaires, setPartenaires] = useState<partnerType[]>([]);
+    
+    useEffect(() => {
+        const fetchPartenaires = async () => {
+          const partenairesData = await getPartenaires();
+          setPartenaires(partenairesData);
+        };
+        fetchPartenaires();
+      }, []);
+
     // Les deux premiers partenaires mélangés entre eux
     const fixedPartners: partnerType[] = partenaires.slice(0, 2).sort(() => Math.random() - 0.5);
 
@@ -12,8 +22,7 @@ export default function PartnerContainer():JSX.Element {
 
     // Mélanger aléatoirement les partenaires restants
     const randomPartners: partnerType[] = remainingPartners
-        .sort(() => Math.random() - 0.5)
-        .slice(0, 10);
+        .sort(() => Math.random() - 0.5);
 
     // Combiner les partenaires fixes et aléatoires
     const displayPartners: partnerType[] = [...fixedPartners, ...randomPartners];
@@ -28,10 +37,14 @@ export default function PartnerContainer():JSX.Element {
 
                 <div className="flex flex-row flex-wrap gap-4 sm:px-[15vw] grid-cols-[repeat(auto-fit,minmax(120px,1fr))] 
                                place-items-center justify-center w-full md:grid-cols-6 md:px-0 sm:grid-cols-3 md:flex-1 lg:max-w-[70rem]">
-                    {displayPartners.map(({image, name }) => (
-                        <div key={name} className="flex flex-col items-center justify-center">
+                    {displayPartners.map(({image, name, className }) => (
+                        <div key={name} className={`flex flex-col items-center justify-center`}>
                             <ImageLink
-                                link={{ pathname: "/partenaires", hash: image.split('.')[0].split('/').slice(-1)[0] }}
+                                link={{ 
+                                    pathname: "/partenaires", 
+                                    hash: name.split('.')[0].split('/').slice(-1)[0].replace(/\s+/g, '_')
+                                }}
+                                className={className}
                                 imageSource={image}
                                 imageAlt={name}
                             />
