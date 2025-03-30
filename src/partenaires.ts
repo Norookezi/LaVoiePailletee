@@ -32,7 +32,9 @@ export const getPartenaires = async (): Promise<partnerType[]> => {
         const data = await fetchGoogleSheetData(sheetConfig);
 
         // Map all data
-        partners = data.map((partner: string | { image: string, nom: string, description: string, style: string }) => {
+        partners = data.map((partner: { image: string, nom: string, description: string, style: string } | string): partnerType => {
+
+            if (typeof partner === 'string') return { image: '', name: '', description: partner, className: '' };
             // Default image path
             let imageUrl = `${window.location.origin}/images/partenaires/default-image.webp`;
 

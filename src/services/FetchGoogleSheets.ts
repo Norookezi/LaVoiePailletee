@@ -38,7 +38,7 @@ function isImageUrl(url: string): boolean {
  */
 export async function fetchGoogleSheetData(
     config: GoogleSheetConfig
-): Promise<string[] | { [key: string]: string }[]> {
+): Promise<string[] | { image: string, nom: string, description: string, style: string }[]> {
     try {
         const { sheetId, columns, rows, sheetGids, returnObjects = false } = config;
 
@@ -130,7 +130,7 @@ export async function fetchGoogleSheetData(
             }
         }
 
-        return allData; // Retourne les données sans modification
+        return allData as { image: string, nom: string, description: string, style: string }[]; // Retourne les données sans modification
     } catch (error) {
         console.error('❌ Erreur lors de la récupération des données Google Sheets:', error);
         return [];
