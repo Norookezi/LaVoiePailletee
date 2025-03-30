@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 /**
  * Interface pour la configuration d'une Google Sheet à récupérer.
@@ -20,11 +20,11 @@ export async function fetchGoogleSheetData(config: GoogleSheetConfig): Promise<s
     try {
         const { sheetId, columns, rows } = config;
 
-        let range = "";
+        let range = '';
 
         // Cas où ni les colonnes ni les lignes ne sont spécifiées
         if (!columns && !rows) {
-            range = "A:Z";  // Toute la feuille
+            range = 'A:Z';  // Toute la feuille
         }
 
         // Cas où les colonnes sont spécifiées mais pas les lignes
@@ -77,11 +77,11 @@ export async function fetchGoogleSheetData(config: GoogleSheetConfig): Promise<s
         }
 
         // Si la plage est plus complexe et inclut des colonnes multiples (ex: A:C), formater de manière correcte
-        if (columns && rows && columns.includes(":")) {
+        if (columns && rows && columns.includes(':')) {
             const columnsArray = columns.split(',');
             const colRange = columnsArray.map(col => {
-                if (col.includes(":")) {
-                    const [startCol, endCol] = col.split(":");
+                if (col.includes(':')) {
+                    const [startCol, endCol] = col.split(':');
                     const colStartCode = startCol.charCodeAt(0);
                     const colEndCode = endCol.charCodeAt(0);
 
@@ -117,24 +117,24 @@ export async function fetchGoogleSheetData(config: GoogleSheetConfig): Promise<s
         const response = await axios.get(url);
 
         // Vérification si une erreur interne est déclenchée par l'API Google Sheets
-        if (response.data.includes(")]}")) {
-            const errorMessage = response.data.split(")]}")[1];
+        if (response.data.includes(')]}')) {
+            const errorMessage = response.data.split(')]}')[1];
             throw new Error(`Erreur API Google Sheets : ${errorMessage}`);
         }
 
         // Transformation du CSV en tableau de lignes et colonnes
         const rowsData: string[][] = response.data
             .trim()
-            .split("\n")
-            .map((row: string) => row.split(",").map(value => value.replace(/(^"|"$)/g, "")));
+            .split('\n')
+            .map((row: string) => row.split(',').map(value => value.replace(/(^"|"$)/g, '')));
 
         // Aplatir le tableau de tableaux en un tableau simple et éliminer les valeurs vides
-        const flattenedData = rowsData.flat().filter(item => item.trim() !== "");
+        const flattenedData = rowsData.flat().filter(item => item.trim() !== '');
 
         return flattenedData;
-    } catch (error: any) {
+    } catch (error: unknown) {
         // Log l'erreur et retourne un tableau vide
-        console.error("❌ Erreur lors de la récupération des données Google Sheet:", error.message || error);
+        console.error('❌ Erreur lors de la récupération des données Google Sheet:', error);
         return [];
     }
 }

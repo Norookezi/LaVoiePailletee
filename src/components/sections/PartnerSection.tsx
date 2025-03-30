@@ -1,7 +1,7 @@
-import { JSX } from "react";
-import ImageLink from "../reusable-ui/ImageLink";
-import { partenaires, partnerType } from "../../partenaires";
-import { Link } from "react-router-dom";
+import { JSX } from 'react';
+import ImageLink from '../reusable-ui/ImageLink';
+import { partenaires, partnerType } from '../../partenaires';
+import { Link } from 'react-router-dom';
 
 export default function PartnerContainer():JSX.Element {
     // Les deux premiers partenaires mélangés entre eux
@@ -31,7 +31,7 @@ export default function PartnerContainer():JSX.Element {
                     {displayPartners.map(({image, name }) => (
                         <div key={name} className="flex flex-col items-center justify-center" role="button" aria-label={`Lien vers le profile de ${name}`}>
                             <ImageLink
-                                link={{ pathname: "/partenaires", hash: image.split('.')[0].split('/').slice(-1)[0] }}
+                                link={{ pathname: '/partenaires', hash: image.split('.')[0].split('/').slice(-1)[0] }}
                                 imageSource={image}
                                 imageAlt={name}
                             />
@@ -39,11 +39,11 @@ export default function PartnerContainer():JSX.Element {
                     ))}
                 </div>
 
-                <Link to={{ pathname: "/partenaires"}} reloadDocument >
+                <Link to={{ pathname: '/partenaires'}} reloadDocument >
                     <div className="flex justify-center px-8 mt-20 md:justify-start md:px-0 sm:w-full">
-                    <p className="px-3 py-2 uppercase break-all bg-white text-crimson w-fit md:text-2xl sm:text-lg font-kony rounded-xl">
+                        <p className="px-3 py-2 uppercase break-all bg-white text-crimson w-fit md:text-2xl sm:text-lg font-kony rounded-xl">
                         En savoir plus
-                    </p>
+                        </p>
                     </div>
                 </Link>
             </div>

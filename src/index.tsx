@@ -6,8 +6,8 @@ import Cookies from './components/reusable-ui/Cookies';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-  <React.StrictMode>
-    <Cookies />
-    <Router />
-  </React.StrictMode>
+    <React.StrictMode>
+        <Cookies />
+        <Router />
+    </React.StrictMode>
 );

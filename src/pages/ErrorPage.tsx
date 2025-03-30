@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 interface ErrorState {
     errorStatus: number;
     errorMessage: string;
 }
 
-const title: string = process.env["NODE_ENV"] === "development" ? "La voie pailletée (DEV)": "La voie pailletée";
+const title: string = process.env['NODE_ENV'] === 'development' ? 'La voie pailletée (DEV)': 'La voie pailletée';
 
 const ErrorPage: React.FC = () => {
     const location = useLocation();
     const [errorStatus, setErrorStatus] = useState<number>(404);
-    const [errorMessage, setErrorMessage] = useState<string>("Page non trouvée. Veuillez vérifier l'URL.");
+    const [errorMessage, setErrorMessage] = useState<string>('Page non trouvée. Veuillez vérifier l\'URL.');
 
     useEffect(() => {
         // Vérifie si l'état d'erreur est passé via la location

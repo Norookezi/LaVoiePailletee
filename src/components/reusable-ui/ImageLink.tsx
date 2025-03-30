@@ -1,5 +1,5 @@
-import { JSX } from "react";
-import { Link, To } from "react-router-dom";
+import { JSX } from 'react';
+import { Link, To } from 'react-router-dom';
 
 interface ImageLinkProps {
     link: To;
@@ -8,7 +8,7 @@ interface ImageLinkProps {
     className?: string;
 }
 
-export default function ImageLink({ link, imageSource, imageAlt, className }: ImageLinkProps): JSX.Element {
+export default function ImageLink({ link, imageSource, imageAlt }: ImageLinkProps): JSX.Element {
     return(
         <Link
             to={link}
