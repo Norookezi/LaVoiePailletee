@@ -1,0 +1,108 @@
+name: CI Deploy in prod
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: ./build/
+          
+  release:
+    runs-on: ubuntu-22.04
+    needs: build
+
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-output
+          path: ./build/
+
+      - name: Create ZIP build archive
+        run: |
+          zip -r ../build.zip ./build
+
+      - name: Create TAR.GZ build archive
+        run: |
+          tar -czvf ../build.tar.gz -C ./build .
+
+      - name: Upload ZIP build artifacts
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ../build.zip
+          asset_name: build.zip
+          asset_content_type: application/zip
+
+      - name: Upload TAR.GZ build artifacts
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ../build.tar.gz
+          asset_name: build.tar.gz
+          asset_content_type: application/x-gtar
+
+  deploy:
+    runs-on: ubuntu-22.04
+    needs: build
+
+    steps:
+      - name: Install wireguard
+        run: apt-get update && apt-get install -y wireguard resolvconf
+
+      - name: Create WireGuard config
+        run: |
+          echo -e ${{ secrets.PROD_VPN }} > /etc/wireguard/wg0.conf
+
+      - name: Setup WireGuard interface
+        run: |
+          wg-quick up wg0
+          wg show
+
+      - name: Setup ssh
+        run: |
+          echo -e "${{ secrets.PROD_SSH_KEY }}" > identity
+          chmod 400 identity
+          mkdir -p ~/.ssh
+          ssh-keyscan ${{ secrets.PROD_SSH_SERVER }} >> ~/.ssh/known_hosts
+          echo "StrictHostKeyChecking no" >> ~/.ssh/config
+      
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-output
+          path: ./build/
+
+      - name: Deploy
+        env:
+          SERVER_IP: ${{ secrets.PROD_SSH_SERVER }}
+          SERVER_USER: ${{ secrets.PROD_SSH_USER }}
+          DEPLOY_PATH: ${{ secrets.PROD_PATH }}
+        run: |
+          scp -i identity -r ./build/* $SERVER_USER@$SERVER_IP:$DEPLOY_PATH

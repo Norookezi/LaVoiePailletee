@@ -1,5 +1,5 @@
-import { JSX } from "react";
-import { Link, To } from "react-router-dom";
+import { JSX } from 'react';
+import { Link, To } from 'react-router-dom';
 
 interface ImageLinkProps {
     link: To;

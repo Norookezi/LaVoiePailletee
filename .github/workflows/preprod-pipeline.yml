@@ -1,0 +1,72 @@
+name: CI Deploy in preprod
+
+on:
+  push:
+    tags:
+      - v*.*.*
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-output
+          path: ./build/
+
+  deploy:
+    runs-on: ubuntu-22.04
+    needs: build
+
+    steps:
+      - name: Install wireguard
+        run: apt-get update && apt-get install -y wireguard resolvconf
+
+      - name: Create WireGuard config
+        run: |
+          echo -e ${{ secrets.PREPROD_VPN }} > /etc/wireguard/wg0.conf
+
+      - name: Setup WireGuard interface
+        run: |
+          wg-quick up wg0
+          wg show
+
+      - name: Setup ssh
+        run: |
+          echo -e "${{ secrets.PREPROD_SSH_KEY }}" > identity
+          chmod 400 identity
+          mkdir -p ~/.ssh
+          ssh-keyscan ${{ secrets.PREPROD_SSH_SERVER }} >> ~/.ssh/known_hosts
+          echo "StrictHostKeyChecking no" >> ~/.ssh/config
+      
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-output
+          path: ./build/
+
+      - name: Deploy
+        env:
+          SERVER_IP: ${{ secrets.PREPROD_SSH_SERVER }}
+          SERVER_USER: ${{ secrets.PREPROD_SSH_USER }}
+          DEPLOY_PATH: ${{ secrets.PREPROD_PATH }}
+        run: |
+          scp -i identity -r ./build/* $SERVER_USER@$SERVER_IP:$DEPLOY_PATH

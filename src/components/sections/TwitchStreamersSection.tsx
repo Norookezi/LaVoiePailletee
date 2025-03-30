@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import StreamerCard from "../reusable-ui/StreamerCard";
+import React, { useEffect, useState } from 'react';
+import StreamerCard from '../reusable-ui/StreamerCard';
 
 interface Streamer {
     id: string;
@@ -19,9 +19,7 @@ const TwitchStreamers: React.FC = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        console.log("🔄 useEffect exécuté");
-        
+    useEffect(() => {        
         const loadStreamers = async () => {
             try {
                 if (fetchStreamersData) {
@@ -34,13 +32,13 @@ const TwitchStreamers: React.FC = () => {
                         console.log(`🔍 Nombre total de requêtes Axios : ${getRequestCount()}`);
                     }
                 } else {
-                    console.warn("🚨 fetchStreamersData n'est pas disponible.");
+                    console.warn('🚨 fetchStreamersData n\'est pas disponible.');
                     setStreamers([]);
                     setLoading(false);
                 }
             } catch (error) {
-                console.error("Erreur lors de la récupération des streamers:", error);
-                setError("Impossible de charger les streamers. Veuillez réessayer plus tard.");
+                console.error('Erreur lors de la récupération des streamers:', error);
+                setError('Impossible de charger les streamers. Veuillez réessayer plus tard.');
                 setLoading(false);
             }
         };

@@ -1,18 +1,18 @@
-import { JSX, useState, useEffect } from "react";
-import ImageLink from "../reusable-ui/ImageLink";
-import { getPartenaires, partnerType } from "../../partenaires";
-import { Link } from "react-router-dom";
+import { JSX, useState, useEffect } from 'react';
+import ImageLink from '../reusable-ui/ImageLink';
+import { getPartenaires, partnerType } from '../../partenaires';
+import { Link } from 'react-router-dom';
 
 export default function PartnerContainer():JSX.Element {
     const [partenaires, setPartenaires] = useState<partnerType[]>([]);
     
     useEffect(() => {
         const fetchPartenaires = async () => {
-          const partenairesData = await getPartenaires();
-          setPartenaires(partenairesData);
+            const partenairesData = await getPartenaires();
+            setPartenaires(partenairesData);
         };
         fetchPartenaires();
-      }, []);
+    }, []);
 
     // Les deux premiers partenaires mélangés entre eux
     const fixedPartners: partnerType[] = partenaires.slice(0, 2).sort(() => Math.random() - 0.5);
@@ -38,11 +38,11 @@ export default function PartnerContainer():JSX.Element {
                                place-items-center justify-center w-full md:grid-cols-6 md:px-0 sm:grid-cols-3 md:flex-1 lg:max-w-[70rem]">
                   
                     {displayPartners.map(({image, name, className }) => (
-                        <div key={name} className={`flex flex-col items-center justify-center`} role="button" aria-label={`Lien vers le profil de ${name}`}>
+                        <div key={name} className={'flex flex-col items-center justify-center'} role="button" aria-label={`Lien vers le profil de ${name}`}>
 
                             <ImageLink
                                 link={{ 
-                                    pathname: "/partenaires", 
+                                    pathname: '/partenaires', 
                                     hash: name.split('.')[0].split('/').slice(-1)[0].replace(/\s+/g, '_')
                                 }}
                                 imageSource={image}
@@ -53,11 +53,11 @@ export default function PartnerContainer():JSX.Element {
                     ))}
                 </div>
 
-                <Link to={{ pathname: "/partenaires"}} reloadDocument >
+                <Link to={{ pathname: '/partenaires'}} reloadDocument >
                     <div className="flex justify-center px-8 mt-20 md:justify-start md:px-0 sm:w-full">
-                    <p className="px-3 py-2 uppercase break-all bg-white text-crimson w-fit md:text-2xl sm:text-lg font-kony rounded-xl">
+                        <p className="px-3 py-2 uppercase break-all bg-white text-crimson w-fit md:text-2xl sm:text-lg font-kony rounded-xl">
                         En savoir plus
-                    </p>
+                        </p>
                     </div>
                 </Link>
             </div>

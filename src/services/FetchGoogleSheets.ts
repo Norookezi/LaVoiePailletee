@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 /**
  * Interface pour la configuration d'une Google Sheet à récupérer.
@@ -42,33 +42,33 @@ export async function fetchGoogleSheetData(
     try {
         const { sheetId, columns, rows, sheetGids, returnObjects = false } = config;
 
-        let range = "";
+        let range = '';
 
         // Gestion de la plage de données (colonnes/lignes)
         if (!columns && !rows) {
-            range = "A:Z"; // Toute la feuille
+            range = 'A:Z'; // Toute la feuille
         } else if (columns && !rows) {
             range = columns
-                .split(",")
+                .split(',')
                 .map(col => col.trim())
-                .map(col => (col.includes(":") ? col : `${col}:${col}`))
-                .join(",");
+                .map(col => (col.includes(':') ? col : `${col}:${col}`))
+                .join(',');
         } else if (!columns && rows) {
             range = rows
-                .split(",")
+                .split(',')
                 .map(row => row.trim())
-                .map(row => (row.includes(":") ? `A${row}:Z${row}` : `A${row}:Z${row}`))
-                .join(",");
+                .map(row => (row.includes(':') ? `A${row}:Z${row}` : `A${row}:Z${row}`))
+                .join(',');
         } else if (columns && rows) {
-            const columnsArray = columns.split(",").map(col => col.trim());
-            const rowsArray = rows.split(",").map(row => row.trim());
+            const columnsArray = columns.split(',').map(col => col.trim());
+            const rowsArray = rows.split(',').map(row => row.trim());
             range = columnsArray
                 .map(col =>
                     rowsArray
-                        .map(row => (row.includes(":") ? `${col}${row}` : `${col}${row}:${col}${row}`))
-                        .join(",")
+                        .map(row => (row.includes(':') ? `${col}${row}` : `${col}${row}:${col}${row}`))
+                        .join(',')
                 )
-                .join(",");
+                .join(',');
         }
 
         // Liste des `gid` à traiter (si aucune n'est renseignée, prendre `gid=0` par défaut)
@@ -80,31 +80,31 @@ export async function fetchGoogleSheetData(
             const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&range=${range}&gid=${gid}`;
             const response = await axios.get<string>(url);
 
-            if (response.data.includes(")]}")) {
-                const errorMessage = response.data.split(")]}")[1];
+            if (response.data.includes(')]}')) {
+                const errorMessage = response.data.split(')]}')[1];
                 throw new Error(`Erreur API Google Sheets : ${errorMessage}`);
             }
 
             // Manipulation de la donnée pour éviter le découpage incorrect
             const rowsData: string[][] = response.data
                 .trim()
-                .split("\n")
+                .split('\n')
                 .map(row => {
                     // Utilisation de regex pour gérer les champs contenant des virgules et des guillemets
                     const regex = /(?:,)(?=(?:(?:[^"]*"){2})*[^"]*$)/g;
-                    return row.split(regex).map(value => value.replace(/(^"|"$)/g, "").trim());
+                    return row.split(regex).map(value => value.replace(/(^"|"$)/g, '').trim());
                 });
 
             // Séparation correcte des colonnes
             if (returnObjects) {
                 const headers = rowsData.shift(); // Première ligne = en-têtes
-                if (!headers) throw new Error("Impossible de récupérer les en-têtes de la feuille.");
+                if (!headers) throw new Error('Impossible de récupérer les en-têtes de la feuille.');
 
                 // Récupération des données sous forme d'objets avec des en-têtes comme clés
                 const objectsData = rowsData.map(row =>
                     headers.reduce<{ [key: string]: string }>((acc, header, index) => {
                         // Si une cellule contient une URL d'image, on la retourne telle quelle
-                        const cellValue = row[index] || "";
+                        const cellValue = row[index] || '';
                         acc[header] = isImageUrl(cellValue) ? cellValue : cellValue;
                         return acc;
                     }, {}));
@@ -120,10 +120,10 @@ export async function fetchGoogleSheetData(
                 );
 
                 // On récupère chaque colonne séparément sans fusionner
-                const columnsArray = columns?.split(",").map(col => col.trim()) || [];
+                const columnsArray = columns?.split(',').map(col => col.trim()) || [];
 
                 const separatedColumns = columnsArray.map((column, colIndex) => {
-                    return flattenedData.map(row => row[colIndex] || "");
+                    return flattenedData.map(row => row[colIndex] || '');
                 });
 
                 allData = [...(allData as string[]), ...separatedColumns.flat()];
@@ -132,7 +132,7 @@ export async function fetchGoogleSheetData(
 
         return allData; // Retourne les données sans modification
     } catch (error) {
-        console.error("❌ Erreur lors de la récupération des données Google Sheets:", error);
+        console.error('❌ Erreur lors de la récupération des données Google Sheets:', error);
         return [];
     }
 }
