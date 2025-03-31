@@ -1,70 +1,86 @@
-# Getting Started with Create React App
+<div align="center">
+    <img src="./public/favicon.ico" style="width: 10rem" alt="">
+    <h1>La voie pailletée</h1>
+</div>
+<div align="center">
+    <img style="margin: 0 1em" src="https://img.shields.io/badge/node-22.14.0-5FA04E?logo=nodedotjs&style=for-the-badge" alt="Node 22.14.0">
+    <img style="margin: 0 1em" src="https://img.shields.io/badge/react-19.0.0-61DAFB?logo=react&style=for-the-badge" alt="React 19.0.0">
+</div>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h2>How to install</h2>
 
-## Available Scripts
+### Developer
+#### Clone the project
+```sh
+$ git clone https://github.com/Norookezi/LaVoiePailletee.git
+```
+#### With docker compose
+To start the server
+```sh
+$ #Start
+$ docker compose build
+$ docker compose up -d
+$ #The server will start on port 3000 with his own Nginx instance
 
-In the project directory, you can run:
+$ #Stop
+$ docker compose down
+```
+#### Manually
+1. Go to the lastest release [here](https://github.com/Norookezi/LaVoiePailletee/releases)
+2. Download [the latest built file](https://github.com/Norookezi/LaVoiePailletee/releases/latest/download/build.zip)
+3. Unzip the release in your Nginx, Apache or alternative HTTP web server
 
-### `npm start`
+And voilà, your project is ready
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Lint
+### Eslint rules
+- Typescipt eslint recommended rules
+- Indentation width: **4 space**
+- Trailing semicolon: **required**
+- Prefer const: **off** *(Temporary due to missing methods)*
+- Quotes: **single** *(Magic quotes are allowed if template string)*
+- Custom aria-role: **text**
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+In order to keep a clean code base, devs might use eslint before commits
 
-### `npm test`
+```sh
+$ npm run lint
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Development
+### Commands
+```sh
+$ npm run start
+```
+This command will start the project in dev mode, each modification will be updates on save
 
-### `npm run build`
+It allows the devs to create without having to refresh the pages each time
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+It will also allow be less strict on error such as unused variables and other
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```sh
+$ npm run build
+```
+This will allow devs to have a built version to export it or see if the project is correctly build
+**If you want to be really sure that the project can be built in prod or preprod follow these instructions**
+1. Create a ``.env.local`` in the main folder which will be ignored in the commit
+2. In this ``.env.local`` add ``CI=true``
+3. Now run ``npm run build``
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+``CI=true`` will enable continuous integration mode like the github actions 
+pipelines which prevent build on any error or warning
+```sh
+$ npm run lint
+```
+This command will check each file for eslint rules violation such as double quotes, unused variables or wrong indentation width and raise warnings
 
-### `npm run eject`
+**Please fix each warning before commit**
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Copyright and license
+This project is an order for the charity [SolidaryGames](https://paa.ge/solidarigames) and [La voie pailletée](https://linktr.ee/LaVoiePailletee)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Every images, texts and files belong to them
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<div align="center">
+<img style="margin: 80px" src="https://img.shields.io/badge/Made with ❤️ by H0ldhaven & Norookezi-333?style=for-the-badge" alt="Made with heart by Norookezi and H0ldhaven">
+</div>
