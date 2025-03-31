@@ -74,16 +74,16 @@ jobs:
 
     steps:
       - name: Install wireguard
-        run: apt-get update && apt-get install -y wireguard resolvconf
+        run: sudo apt-get update && sudo apt-get install -y wireguard resolvconf
 
       - name: Create WireGuard config
         run: |
-          echo -e ${{ secrets.PROD_VPN }} > /etc/wireguard/wg0.conf
+          echo -e "${{ secrets.PROD_VPN }}" > /etc/wireguard/wg0.conf
 
       - name: Setup WireGuard interface
         run: |
-          wg-quick up wg0
-          wg show
+          sudo wg-quick up wg0
+          sudo wg show
 
       - name: Setup ssh
         run: |
