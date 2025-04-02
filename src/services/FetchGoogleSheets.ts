@@ -1,16 +1,4 @@
 import axios from 'axios';
-
-/**
- * Interface pour la configuration d'une Google Sheet à récupérer.
- */
-export interface GoogleSheetConfig {
-    sheetId: string;
-    sheetGids?: number[];
-    columns?: string;
-    rows?: string;
-    returnObjects?: boolean;
-}
-
 /**
  * Récupère des données spécifiques d'un Google Sheet sous forme de tableau de strings.
  * @param config Configuration contenant l'ID de la feuille, les colonnes, les lignes et les GID.
@@ -29,6 +17,53 @@ export interface GoogleSheetConfig {
  */
 function isImageUrl(url: string): boolean {
     return /\.(jpg|jpeg|png|gif|bmp|tiff|webp)$/i.test(url);
+}
+
+/**
+ * Parse un CSV en tableau de chaînes de caractères, en gérant les retours à la ligne et les guillemets.
+ * @param csv - Le texte CSV brut
+ * @returns Tableau 2D des valeurs du CSV
+ */
+export function parseCSV(csv: string): string[][] {
+    const rows: string[][] = [];
+    let currentRow: string[] = [];
+    let currentCell = '';
+    let insideQuotes = false;
+
+    for (let i = 0; i < csv.length; i++) {
+        const char = csv[i];
+        const nextChar = csv[i + 1];
+
+        if (char === '"' && nextChar === '"') {
+            // Gérer les guillemets échappés (ex: "" -> ")
+            currentCell += '"';
+            i++; // Sauter le prochain guillemet
+        } else if (char === '"') {
+            // Changer l'état insideQuotes
+            insideQuotes = !insideQuotes;
+        } else if (char === ',' && !insideQuotes) {
+            // Nouvelle colonne
+            currentRow.push(currentCell);
+            currentCell = '';
+        } else if (char === '\n' && !insideQuotes) {
+            // Nouvelle ligne
+            currentRow.push(currentCell);
+            rows.push(currentRow);
+            currentRow = [];
+            currentCell = '';
+        } else {
+            // Ajouter le caractère à la cellule actuelle
+            currentCell += char;
+        }
+    }
+
+    // Ajouter la dernière cellule et la dernière ligne
+    if (currentCell || currentRow.length > 0) {
+        currentRow.push(currentCell);
+        rows.push(currentRow);
+    }
+
+    return rows;
 }
 
 /**
@@ -86,14 +121,7 @@ export async function fetchGoogleSheetData(
             }
 
             // Manipulation de la donnée pour éviter le découpage incorrect
-            const rowsData: string[][] = response.data
-                .trim()
-                .split('\n')
-                .map(row => {
-                    // Utilisation de regex pour gérer les champs contenant des virgules et des guillemets
-                    const regex = /(?:,)(?=(?:(?:[^"]*"){2})*[^"]*$)/g;
-                    return row.split(regex).map(value => value.replace(/(^"|"$)/g, '').trim());
-                });
+            const rowsData: string[][] = parseCSV(response.data);
 
             // Séparation correcte des colonnes
             if (returnObjects) {
