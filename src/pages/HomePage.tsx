@@ -47,7 +47,7 @@ const HomePage: React.FC = () => {
                     </p>
                     <Link to="/streamers">
                         <div className="flex justify-end px-8 md:justify-start md:px-0">
-                            <p role="text" className="px-3 py-2 text-white uppercase w-fit md:text-2xl font-kony rounded-xl bg-mediumseagreen">
+                            <p role="text" className="px-3 py-2 pb-[0.1rem] text-white uppercase w-fit md:text-2xl font-kony rounded-xl bg-mediumseagreen">
                 + de 50 streamers<span className="md:hidden"> participent</span>
                             </p>
                         </div>
@@ -86,7 +86,7 @@ const HomePage: React.FC = () => {
 
                     <Link to="https://le-refuge.org/" aria-label="Bouton de redirection vers le site de l'association Le Refuge" target="_blank">
                         <div className="flex justify-center px-8 md:justify-start md:px-0 sm:w-full">
-                            <p className="px-3 py-2 uppercase break-all bg-white text-mediumseagreen w-fit md:text-2xl sm:text-lg font-kony rounded-xl">
+                            <p className="px-3 py-2 pb-[0.1rem] uppercase break-all bg-white text-mediumseagreen w-fit md:text-2xl sm:text-lg font-kony rounded-xl">
                 Visiter le site
                             </p>
                         </div>
