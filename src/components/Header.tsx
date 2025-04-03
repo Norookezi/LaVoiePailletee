@@ -23,7 +23,7 @@ const Header: React.FC = () => {
                 </Link>
 
                 {/* Titre centré sous le logo */}
-                <div className="flex items-center justify-center w-full md:pt-24 pb-10 md:pb-16 leading-none text-center text-white font-kony text-[3em] z-10">
+                <div className="flex items-center justify-center w-full md:pt-24 pb-10 md:pb-16 leading-none text-center text-white font-kony uppercase text-[2em] sm:text-[4em] z-10">
                     <h1>La voie Pailletée</h1>
                 </div>
             </div>
