@@ -163,7 +163,7 @@ const HomePage: React.FC = () => {
                     <UserCard
                         href="images/team/Valcka.webp"
                         name="Valcka"
-                        job="Responsable Réseaux Sociaux"
+                        job="Responsable Charte Graphique"
                     />
                 </div>
                 <div className="relative flex justify-center p-3 mx-auto mt-14 md:mt-52 w-fit">
