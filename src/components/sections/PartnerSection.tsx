@@ -55,7 +55,7 @@ export default function PartnerContainer():JSX.Element {
 
                 <Link to={{ pathname: '/partenaires'}} reloadDocument >
                     <div className="flex justify-center px-8 mt-20 md:justify-start md:px-0 sm:w-full">
-                        <p className="px-3 py-2 uppercase break-all bg-white text-crimson w-fit md:text-2xl sm:text-lg font-kony rounded-xl">
+                        <p className="px-3 py-2 pb-[0.1rem] uppercase break-all bg-white text-crimson w-fit md:text-2xl sm:text-lg font-kony rounded-xl">
                         En savoir plus
                         </p>
                     </div>
