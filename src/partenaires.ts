@@ -1,5 +1,6 @@
+import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { fetchGoogleSheetData, GoogleSheetConfig } from './services/FetchGoogleSheets';
-import { IconDefinition } from '@fortawesome/free-brands-svg-icons';
+import { faInstagram, faTwitch, IconDefinition } from '@fortawesome/free-brands-svg-icons';
 
 // Type for partner
 export interface partnerType {
@@ -19,9 +20,36 @@ export interface partnerType {
 const sheetConfig: GoogleSheetConfig = {
     sheetId: '1ggCnsqJmcA-Xxjv50NV_P9pqIZf9tc2rCz6PaYhZzNY', 
     sheetGids: [412412823],
-    columns: 'A:D',
-    returnObjects: true,
+    columns: 'A:Z',
+    query: 'SELECT *'
 };
+
+function setSocial(socials: string[][]): { name: string, icon: IconDefinition, href: string, className?: string }[] {
+    const listSocials = socials.map((v): { name: string, icon: IconDefinition, href: string, className?: string } => {
+        const domain: string = v[1].includes('://') ? v[1] : `https://${v[1]}`;
+        const name: string = v[1].split('.').reverse()[1];
+        let icon: IconDefinition = faGlobe;
+        
+        switch (name) {
+        case 'twitch':
+            icon = faTwitch;
+            break;
+
+        case 'instagram':
+            icon = faInstagram;
+            break;
+        }
+
+        return {
+            href: domain,
+            name: name,
+            icon: icon
+        };
+    });
+
+
+    return listSocials;
+}
 
 // Dynamically get partners and return it
 export const getPartenaires = async (): Promise<partnerType[]> => {
@@ -29,43 +57,19 @@ export const getPartenaires = async (): Promise<partnerType[]> => {
     let partners: partnerType[] = [];
     try {
     // Fetch datas
-        const data = await fetchGoogleSheetData(sheetConfig);
-
+        const data: {[key: string]: string}[] = (await fetchGoogleSheetData(sheetConfig))[0];
         // Map all data
-        partners = data.map((partner: { image: string, nom: string, description: string, style: string } | string): partnerType => {
-
-            if (typeof partner === 'string') return { image: '', name: '', description: partner, className: '' };
-            // Default image path
-            let imageUrl = `${window.location.origin}/images/partenaires/default-image.webp`;
-
-            // Check if image header is not empty or "N/A"
-            if (partner.image && partner.image !== 'N/A' && partner.image.trim() !== '') {
-                const imageLink = partner.image.trim();
-        
-                // If image is from google drive, convert it for display
-                if (imageLink.includes('drive.google.com')) {
-                    const regex = /https:\/\/drive\.google\.com\/file\/d\/([^/]+)/;
-                    const match = imageLink.match(regex);
-
-                    if (match && match[1]) {
-                        const fileId = match[1];
-                        imageUrl = `https://lh3.googleusercontent.com/d/${fileId}=s640`;
-                    }
-                } else {
-                    // another image link, just display it
-                    imageUrl = imageLink;
-                }
-            }
-
-            // return of all datas
-            return {
-                name: partner.nom || 'Nom inconnu',
-                image: imageUrl,
-                description: partner.description || 'Description manquante',
-                className: partner.style || '',
-            };
-        });
-    
+        if (typeof data != 'string') {
+            return data.map((partner: {[key: string]: string}): partnerType =>{
+                const image: string | undefined = partner['image'].match(/drive\.google\.com\/file\/d\/([A-Za-z0-9-_]{1,})/)?.[1];
+                return {
+                    name: partner['nom'],
+                    image: image ? `https://lh3.googleusercontent.com/d/${image}` : '',
+                    description: partner['description']??'',
+                    className: partner['style'],
+                    socials: setSocial(Object.entries(partner).filter(([key,value]) => key.startsWith('emptyHeader_') && value != '' ))
+                };});
+        }    
     } catch (error) {
         console.error('Erreur lors de la récupération des données : ', error);
     }

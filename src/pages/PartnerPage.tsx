@@ -1,5 +1,4 @@
 import React, { JSX, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import { IconDefinition } from '@fortawesome/free-brands-svg-icons';
@@ -83,9 +82,6 @@ const scrollToAnchor = (hash: string): void => {
 };
 
 const PartnerPage: React.FC = () => {
-    // Permet d'obtenir l'URL actuelle (y compris le hash "#monPartenaire").
-    const location = useLocation();
-
     const [partenaires, setPartenaires] = useState<partnerType[]>([]);
 
     useEffect(() => {
