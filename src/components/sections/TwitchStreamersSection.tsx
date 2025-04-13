@@ -19,9 +19,11 @@ const TwitchStreamers: React.FC = () => {
         const loadStreamers = async () => {
             try {
                 const data = await fetchStreamersData();
+                console.log('data :', data);
 
                 if (data && data.streamers && Array.isArray(data.streamers)) {
                     setStreamers(data.streamers);
+                    console.log('streamers :', data.streamers);
                 } else {
                     console.warn('🚨 Les données des streamers sont mal formées.');
                     setStreamers([]);
@@ -29,7 +31,7 @@ const TwitchStreamers: React.FC = () => {
                 setLoading(false);
             } catch (error) {
                 console.error('Erreur lors de la récupération des streamers:', error);
-                setError('Impossible de charger les streamers. Veuillez réessayer plus tard.');
+                setError('Erreur: Impossible de charger les streamers, Veuillez réessayer plus tard.');
                 setLoading(false);
             }
         };
@@ -41,7 +43,14 @@ const TwitchStreamers: React.FC = () => {
     const offlineStreamers = Array.isArray(streamers) ? streamers.filter((streamer) => !streamer.isOnline) : [];
 
     return (
-        <div className="p-4 mx-auto mt-20 max-w-7xl">
+        <div className="p-4 mx-auto mt-4 max-w-7xl">
+            {error && (
+                <div className='mb-8'>
+                    <hr className="border-b-4 max-w-[75vw] w-auto mx-auto mb-4 border-red-800/10 rounded-xl" />
+                    <p className="text-center font-bold text-white bg-red-700 mb-4 py-2 px-4 rounded-xl">{error}</p>
+                    <hr className="border-b-4 max-w-[75vw] w-auto mx-auto mb-4 border-red-800/10 rounded-xl" />
+                </div>
+            )}
             <h2 className="mb-4 text-3xl text-center uppercase text-crimson font-kony"><span aria-hidden="true">🎥</span> Streamers en direct</h2>
             <div className="flex flex-wrap justify-center w-auto gap-5 pt-10 mb-10 mt-14 px-7 md:mt-10 md:px-20">
                 {loading ? (
@@ -57,7 +66,7 @@ const TwitchStreamers: React.FC = () => {
                 )}
             </div>
 
-            <hr className="border-b-4 max-w-[75vw] w-auto mx-auto my-5 border-black/10" />
+            <hr className="border-b-4 max-w-[75vw] w-auto mx-auto my-5 border-black/10 rounded-xl" />
 
             <h2 className="mt-10 mb-4 text-3xl text-center uppercase text-crimson font-kony"><span aria-hidden="true">💤</span> Streamers hors ligne</h2>
             <div className="flex flex-wrap justify-center w-auto gap-5 pt-10 mt-14 px-7 md:mt-10 md:px-20">
@@ -73,8 +82,6 @@ const TwitchStreamers: React.FC = () => {
                     ))
                 )}
             </div>
-
-            {error && <p className="mt-4 text-center text-red-500">{error}</p>}
         </div>
     );
 };

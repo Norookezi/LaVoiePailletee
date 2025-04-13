@@ -1,8 +1,9 @@
 import axios, { AxiosError } from 'axios';
 
 const api = axios.create({
-    baseURL: process.env.API_BASE_URL,
+    baseURL: process.env.REACT_APP_API_BASE_URL,
     timeout: 10000,
+    withCredentials: false,
     headers: {
         'Content-Type': 'application/json',
         'X-Requested-With': 'XMLHttpRequest',
@@ -12,7 +13,7 @@ const api = axios.create({
 
 // Ajouter un intercepteur pour les erreurs
 api.interceptors.response.use(
-    (response) => response, // Si la réponse est réussie, on retourne directement la réponse
+    (response) => response.data, // Si la réponse est réussie, on retourne directement la réponse
     (error: AxiosError) => {
         // Vérifier si l'erreur vient du serveur ou du client
         if (error.response) {
