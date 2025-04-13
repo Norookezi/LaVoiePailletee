@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import StreamerCard from '../reusable-ui/StreamerCard';
+import { fetchStreamersData } from '../../services/FetchStreamers';
+
 
 interface Streamer {
     id: string;
     name: string;
-    avatar: string;
-    isLive: boolean;
+    image: string;
+    isOnline: boolean;
 }
-
-let fetchStreamersData: () => Promise<Streamer[]> | (() => Streamer[]);
-let getRequestCount: () => number;
-
-fetchStreamersData = (): Promise<Streamer[]> => Promise.resolve([]); // Mock si API non disponible
-getRequestCount = () => 0; // Mock si API non disponible
 
 const TwitchStreamers: React.FC = () => {
     const [streamers, setStreamers] = useState<Streamer[]>([]);
@@ -24,13 +20,9 @@ const TwitchStreamers: React.FC = () => {
             try {
                 if (fetchStreamersData) {
                     const data = await fetchStreamersData();
-                    setStreamers(data);
+                    setStreamers(data.streamers);
                     setLoading(false);
     
-                    // Count request from axios in debug mode (set "REACT_DEBUG_MODE=true (or false)" in your .env.local file)
-                    if (process.env.REACT_DEBUG_MODE) {
-                        console.log(`🔍 Nombre total de requêtes Axios : ${getRequestCount()}`);
-                    }
                 } else {
                     console.warn('🚨 fetchStreamersData n\'est pas disponible.');
                     setStreamers([]);
@@ -46,8 +38,8 @@ const TwitchStreamers: React.FC = () => {
         loadStreamers();
     }, []);
 
-    const liveStreamers = streamers.filter((streamer) => streamer.isLive);
-    const offlineStreamers = streamers.filter((streamer) => !streamer.isLive);
+    const liveStreamers = streamers.filter((streamer) => streamer.isOnline);
+    const offlineStreamers = streamers.filter((streamer) => !streamer.isOnline);
 
     return (
         <div className="p-4 mx-auto mt-20 max-w-7xl">
@@ -61,7 +53,7 @@ const TwitchStreamers: React.FC = () => {
                     <h3 className="text-center text-xs sm:text-base md:text-lg lg:text-xl text-[#9c9898] font-kony">Aucun streameur "En Ligne" actuellement</h3>
                 ) : (
                     liveStreamers.map((streamer) => (
-                        <StreamerCard key={streamer.id} username={streamer.name} avatar={streamer.avatar} isLive />
+                        <StreamerCard key={streamer.id} username={streamer.name} avatar={streamer.image} isLive />
                     ))
                 )}
             </div>
@@ -78,7 +70,7 @@ const TwitchStreamers: React.FC = () => {
                     <h3 className="text-center text-xs sm:text-base md:text-lg lg:text-xl text-[#9c9898] font-kony">Aucun streameur "Hors Ligne" actuellement</h3>
                 ) : (
                     offlineStreamers.map((streamer) => (
-                        <StreamerCard key={streamer.id} username={streamer.name} avatar={streamer.avatar} />
+                        <StreamerCard key={streamer.id} username={streamer.name} avatar={streamer.image} />
                     ))
                 )}
             </div>
