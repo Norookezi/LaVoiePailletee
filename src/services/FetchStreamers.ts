@@ -13,6 +13,11 @@ export interface StreamerApiResponse {
 }
 
 export const fetchStreamersData = async (): Promise<StreamerApiResponse> => {
-    const response = await api.get<StreamerApiResponse>('/streamers');
-    return response.data;
+    return await api.get<StreamerApiResponse>('/streamers')
+        .then((response) => {
+            return response.data;
+        }).catch((error) => {
+            console.error('Erreur lors de la récupération des streamers:', error);
+            throw new Error('Impossible de récupérer les données des streamers.');
+        });
 };
