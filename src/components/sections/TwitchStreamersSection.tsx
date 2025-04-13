@@ -21,7 +21,6 @@ const TwitchStreamers: React.FC = () => {
                 const data = await fetchStreamersData();
 
                 if (data && Array.isArray(data.streamers)) {
-                    const data = await fetchStreamersData();
                     setStreamers(data.streamers);
                 } else {
                     console.warn('🚨 Les données des streamers sont mal formées.');
