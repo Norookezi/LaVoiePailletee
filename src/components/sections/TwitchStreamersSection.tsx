@@ -18,16 +18,16 @@ const TwitchStreamers: React.FC = () => {
     useEffect(() => {        
         const loadStreamers = async () => {
             try {
-                if (fetchStreamersData) {
+                const data = await fetchStreamersData();
+
+                if (data && Array.isArray(data.streamers)) {
                     const data = await fetchStreamersData();
                     setStreamers(data.streamers);
-                    setLoading(false);
-    
                 } else {
-                    console.warn('🚨 fetchStreamersData n\'est pas disponible.');
+                    console.warn('🚨 Les données des streamers sont mal formées.');
                     setStreamers([]);
-                    setLoading(false);
                 }
+                setLoading(false);
             } catch (error) {
                 console.error('Erreur lors de la récupération des streamers:', error);
                 setError('Impossible de charger les streamers. Veuillez réessayer plus tard.');
@@ -38,8 +38,8 @@ const TwitchStreamers: React.FC = () => {
         loadStreamers();
     }, []);
 
-    const liveStreamers = streamers.filter((streamer) => streamer.isOnline);
-    const offlineStreamers = streamers.filter((streamer) => !streamer.isOnline);
+    const liveStreamers = Array.isArray(streamers) ? streamers.filter((streamer) => streamer.isOnline) : [];
+    const offlineStreamers = Array.isArray(streamers) ? streamers.filter((streamer) => !streamer.isOnline) : [];
 
     return (
         <div className="p-4 mx-auto mt-20 max-w-7xl">
