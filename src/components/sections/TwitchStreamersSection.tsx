@@ -19,11 +19,9 @@ const TwitchStreamers: React.FC = () => {
         const loadStreamers = async () => {
             try {
                 const data = await fetchStreamersData();
-                console.log('data :', data);
 
                 if (data && data.streamers && Array.isArray(data.streamers)) {
                     setStreamers(data.streamers);
-                    console.log('streamers :', data.streamers);
                 } else {
                     console.warn('🚨 Les données des streamers sont mal formées.');
                     setStreamers([]);
@@ -61,7 +59,7 @@ const TwitchStreamers: React.FC = () => {
                     <h3 className="text-center text-xs sm:text-base md:text-lg lg:text-xl text-[#9c9898] font-kony">Aucun streameur "En Ligne" actuellement</h3>
                 ) : (
                     liveStreamers.map((streamer) => (
-                        <StreamerCard key={streamer.id} username={streamer.name} avatar={streamer.image} isLive />
+                        <StreamerCard key={streamer.name} username={streamer.name} avatar={streamer.image} isLive />
                     ))
                 )}
             </div>
@@ -78,7 +76,7 @@ const TwitchStreamers: React.FC = () => {
                     <h3 className="text-center text-xs sm:text-base md:text-lg lg:text-xl text-[#9c9898] font-kony">Aucun streameur "Hors Ligne" actuellement</h3>
                 ) : (
                     offlineStreamers.map((streamer) => (
-                        <StreamerCard key={streamer.id} username={streamer.name} avatar={streamer.image} />
+                        <StreamerCard key={streamer.name} username={streamer.name} avatar={streamer.image} />
                     ))
                 )}
             </div>

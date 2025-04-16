@@ -6,14 +6,14 @@ const api = axios.create({
     withCredentials: false,
     headers: {
         'Content-Type': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest',
         'Accept': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
     },
 });
 
 // Ajouter un intercepteur pour les erreurs
 api.interceptors.response.use(
-    (response) => response.data, // Si la réponse est réussie, on retourne directement la réponse
+    (response) => response, // Si la réponse est réussie, on retourne directement la réponse
     (error: AxiosError) => {
         // Vérifier si l'erreur vient du serveur ou du client
         if (error.response) {
