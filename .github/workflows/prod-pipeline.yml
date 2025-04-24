@@ -20,6 +20,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: make env file
+        run: |
+          echo -e "${{ secrets.PROD_ENV }}" > .env.production
+          cat .env.production
+
       - name: Build project
         run: npm run build
 
