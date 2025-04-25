@@ -1,13 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Router from './Router';
-import Cookies from './components/reusable-ui/Cookies';
+import { BrowserRouter as Router } from 'react-router-dom';
+import App from './Router';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-    <React.StrictMode>
-        <Cookies />
-        <Router />
-    </React.StrictMode>
+    <React.Suspense>
+        <Router>
+            <App></App>
+        </Router>
+    </React.Suspense>
 );
