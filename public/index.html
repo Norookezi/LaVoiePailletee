@@ -12,6 +12,89 @@
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/images/lvp_colored.webp" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>LA VOIE PAILLETÉE</title>
+    <style id="loader-style">
+      div.loader {
+        z-index: 9999;
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: flex;
+        background-color: black;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+        flex-direction: column;
+      }
+
+      div.loader span.loader-content {
+        display: flex;
+      }
+
+      div.loader span.loader-text {
+        color: white;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      div.loader span.loader-content img.loader-logo {
+        width: min(40vw, 10rem);
+        height: min(40vw, 10rem);
+        background-size: contain;
+      }
+
+      div.loader span.loader-content img.loader-spinner {
+        display: block;
+        position: absolute;
+        width: min(40vw, 10rem);
+        height: min(40vw, 10rem);
+        border-radius: 100%;
+        object-fit: contain;
+        animation: loadingSpin infinite 1s linear;
+      }
+      
+      @keyframes loadingSpin {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+    <div class="loader">
+      <span class="loader-content">
+        <img class="loader-logo" src="images/lvp_colored.webp" alt="" />
+        <img class="loader-spinner" src="images/ellipse.svg" alt="" />
+      </span>
+      <span class="loader-text"></span>
+    </div>
+  <script defer>
+    const loader_texts = [
+      'Site en cours de chargement',
+      'Ce chargement apparaît en attendant que la page charge',
+      'Sinon, vous, ça va ?',
+      'La voie pailletée, événement sur Twitch les 6, 7 et 8 juin sur Twitch',
+      'L\'événement a été initié par Petounio en association avec SolidariGames',
+      'Les fonds générés pendant l\'événement seront reversés à la fondation Le Refuge',
+      'Le saviez-vous ? NobodyZ n\'est pas personne, il est bien quelqu\'un !',
+      'Non, le pseudo de Matsu n\'a rien à voir avec Mastu, le youtubeur',
+      'Vous savez que vous brillez au moins autant que les paillettes ?',
+      'Attention, le pseudo "Petounio" ne s\'écrit pas avec un accent',
+    ];
+
+    document.querySelector('.loader-text').innerText = loader_texts[0];
+    
+    const loader_text = setInterval(()=>{
+      document.querySelector('.loader-text').innerText = loader_texts[Math.floor(Math.random() * loader_texts.length)]
+    }, 3000)
+    
+    window.addEventListener('load', (e)=>{
+      clearInterval(loader_text);
+      document.querySelector('.loader').remove();
+      document.querySelector('#loader-style').remove();
+      document.body.style = '';
+    }, { once: true })
+  </script>
   </head>
   <body style="overflow: hidden; margin: 0;">
     <noscript>
