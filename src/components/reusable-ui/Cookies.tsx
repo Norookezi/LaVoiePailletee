@@ -1,231 +1,168 @@
-import { ChangeEvent, JSX, useState } from 'react';
-import Cookies from 'universal-cookie';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { JSX, useEffect, useState } from 'react';
+import Button from './Button';
 import {
     faCheck,
     faChevronDown,
     faCookieBite,
     faGear,
+    faUndo,
     faXmark,
 } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { CookieService } from '../../services/cookie.service';
+import Switch from './Switch';
+import { Analystic } from '../../services/analystic.service';
+import { Link } from 'react-router-dom';
 
-class Cookie {
-    cookies: {[key: string]: boolean} = {};
-    updateCookie(event: ChangeEvent<HTMLInputElement>): void {
-        const {checked, id} = event.target;
-        this.cookies[id] = checked;
+const cookieService: CookieService = new CookieService();
+const analyticsService = new Analystic();
 
-        switch (Object.values(this.cookies).filter(v=>v).length) {
-        case 0:
-            document.querySelector('#customValidationButton')?.setAttribute('aria-label', 'Refuser tout les cookies');
-            break;
-        
-        case 2:
-            document.querySelector('#customValidationButton')?.setAttribute('aria-label', 'Autoriser tout les cookies');
-            break;
-    
-        default:
-            document.querySelector('#customValidationButton')?.setAttribute('aria-label', `Valider mes choix: ${Object.entries(this.cookies).map(([key, value]) => {
-                return `${key}: ${value?'autorisé':'refusé'}`;
-            }).join(', ')}`);
-            break;
-        }
-    }
-    get cookiesState(): 'denied' | 'granted' | 'pending' | string {
-        return cookies.get('cookies') ?? 'pending';
-    }
-
-    set cookiesState(state: 'denied' | 'granted' | 'pending' | string) {
-        if (state === 'custom') {
-            state = Object.entries(this.cookies).filter(([,v])=>v).map(([k,])=> k).join('/');
-        }
-        cookies.set('cookies', state===''?'denied':state);
-    }
-
-    get isCookiesPending(): boolean {
-        return this.cookiesState === 'pending';
-    }
-
-    clearAll() {
-        Object.keys(cookies.getAll()).forEach(cookie=>{
-            cookies.remove(cookie);
-        });
-    }
+interface CookieState {
+    isPending: boolean,
+    mode: 'simple'|'complex',
+    selectedCookies: {[key: string]: boolean}
 }
 
-function getColor(value: string) {
-    switch (value) {
-    case 'pending':
-        return 'bg-white';
-    case 'granted':
-        return 'bg-mediumseagreen/70';
-    case 'denied':
-        return 'bg-red-400/70';
-    default:
-        return 'bg-white';
-    }
-};
-
-
-const cookies = new Cookies();
-const cookieHandler = new Cookie();
-
 export default function CookiesMenu(): JSX.Element {
-    const [, setCookieStatus] = useState<'denied' | 'granted' | 'pending' | string>(
-        cookieHandler.cookiesState
-    );
-    const [isOptionSelected, setIsOptionSelected] = useState(false);
+    const [state, updateState] = useState<CookieState>({isPending: !!cookieService.isCookiePending, mode: 'simple', selectedCookies: !cookieService.isCookiePending?Object.assign({}, ...cookieService.cookieList.map(({title})=>{ return {[title]: cookieService.get(title)};})):{}});
 
-    const handleAccept = () => {
-        cookieHandler.cookiesState = 'granted';
-        setCookieStatus('granted');
-    };
+    useEffect(()=>{
+        if (state.isPending) return;
+        if (state.selectedCookies['Analytics'] === true && analyticsService.isInitNeeded) analyticsService.initGA();
+    }, [state]);
 
-    const handleDeny = () => {
-        cookieHandler.clearAll();
-        cookieHandler.cookiesState = 'denied';
-        setCookieStatus('denied');
+    const updateCookie = (event: React.ChangeEvent<HTMLInputElement>) => {
+        updateState({isPending: true, mode:'complex', selectedCookies: {...state.selectedCookies, ...{[event.currentTarget.id]: event.currentTarget.checked}}});
     };
+    function setCookies(isCookiePending: boolean = false, cookies: {[key: string]: boolean} = {}) {
+        const date = new Date();
 
-    const handleReset = () => {
-        cookieHandler.clearAll();
-        cookieHandler.cookiesState = 'pending';
-        setCookieStatus('pending');
-    };
+        date.setDate(date.getDate() + 7);
+        cookieService.set('isCookiePending', isCookiePending, {expires: date });
+        Object.entries(cookies).forEach(([name, isAllowed]) => {
+            cookieService.set(name, isAllowed, {expires: date });
+        });
+        updateState({isPending: false, mode: 'simple', selectedCookies: cookies});
 
-    const handleOption = () => {
-        setIsOptionSelected(!isOptionSelected);
-    };
-
-    const handleCustom = () => {
-        cookieHandler.cookiesState = 'custom';
-        setCookieStatus('custom');
-    };
+    }
+    
+    if (cookieService.isCookiePending == undefined) {
+        cookieService.set('isCookiePending', true);
+    }
 
     return (
-        (<div
-            role="alert"
-            className={`fixed bottom-0 right-0 m-5 w-auto z-[9999] ${cookieHandler.isCookiesPending ? 'max-sm:w-[90vw] max-sm:m-0 max-sm:right-1/2 max-sm:translate-x-1/2' : ''}  ${
-                getColor(cookieHandler.cookiesState)
-            } ${
-                cookieHandler.isCookiesPending
-                    ? 'rounded-lg shadow-gray-700'
-                    : 'rounded-full shadow-black'
-            } overflow-hidden shadow-lg`}
-        >
-            <FontAwesomeIcon
-                onClick={handleReset}
-                title={`Cookies: ${
-                    cookieHandler.cookiesState === 'granted' ? 'accepté' : 'refusé'
-                }`}
-                icon={faCookieBite}
-                className={`${cookieHandler.isCookiesPending ? 'hidden' : 'block'} p-2 text-2xl`}
-            />
-            <div className={`${cookieHandler.isCookiesPending ? 'block' : 'hidden'}`}>
-                <div className='w-full py-2 text-xl text-center text-white bg-green-500 font-kony'>
-                    <FontAwesomeIcon icon={faCookieBite} />
-                    <span className='m-1'>Vous reprendrez bien un cookie ?</span>
-                </div>
-                <p
-                    className={`p-3 break-words max-w-[90vw] w-96  ${
-                        isOptionSelected ? 'hidden' : 'block'
-                    }`}
-                >
-          Nous utilisons des cookies pour mesurer la fréquentation de notre
-          site, dans le but d'améliorer l'impact de notre événement caritatif.
-          Ces données anonymes nous aident à convaincre de futurs partenaires de
-          nous soutenir.
-                </p>
-                <div className={`${!isOptionSelected ? 'hidden' : 'block'}`}>
-                    <label
-                        htmlFor='Referer'
-                        className={'px-3 py-2 block'}
-                        key={'CookieSelectorReferer'}
+        <>
+            {cookieService.isCookiePending ? (
+                <div className="fixed z-50 overflow-hidden bg-white shadow-2xl bottom-5 max-sm:bottom-0 rounded-xl sm:max-w-96 sm:left-5 max-sm:w-screen max-sm:m-0 max-sm:right-1/2 max-sm:translate-x-1/2">
+                    <p
+                        data-title
+                        className="p-3 text-xl text-center text-white bg-green-500 font-kony"
                     >
-                        <div className='flex justify-between w-auto'>
-                            <span id="RefererLabel">Referer</span>
-                            <input type='checkbox' onChange={(event)=>cookieHandler.updateCookie(event)} name='Referer' id='Referer' />
-                        </div>
-                        <p className='px-3 max-w-96'>Afin de vous rediriger vers la page de votre streamer préféré, nous avons ajouté un clef dans le lien partagé par le streamer qui nous permet de savoir d'ou vous venez</p>
-                    </label>
-                    <label
-                        htmlFor='Analytics'
-                        className={'px-3 py-2 block'}
-                        key='CookieSelectorAnalytics'
-                    >
-                        <div className='flex justify-between w-auto'>
-                            <span id="AnalyticsLabel">Google analytics</span>
-                            <input type='checkbox' onChange={(event)=>cookieHandler.updateCookie(event)} name='Analytics' id='Analytics' />
-                        </div>
-                        <div className='px-3 max-w-96'>Afin de pouvoir mesurer l'impact de notre site, nous avons mit en place un outil d'analyse anonyme qui nous permet de voir les information suivante
-                            <label aria-label='Cliquez pour en savoir plus' htmlFor={'Analytics_detail'} className='p-2 group'>
-                                <input type='checkbox' className='hidden' name='Analytics_detail' id='Analytics_detail' />
-                                <span className='underline hover:font-bold text-nowrap'>Voir plus <FontAwesomeIcon icon={faChevronDown} className='mr-1 duration-100 -rotate-90 group-has-[:checked]:-rotate-0' /></span>
-                                <div className='hidden group-has-[:checked]:block'>
-                                    <ul className='pl-5 list-disc'>
-                                        <li>Zone géographique aproximative</li>
-                                        <li>Date et heure d'acces a la page</li>
-                                        <li>Page visité sur le site</li>
-                                        <li>Statistiques Referer (si acceptée)</li>
-                                    </ul>
+                        Vous reprendrez bien un cookie ?
+                    </p>
+                    {
+                        /* Simple */
+                        state.mode === 'simple' && (
+                            <>
+                                <div data-body-simple className="px-5 py-3">
+                                    <p>
+                                    Ce site utilise des cookies pour mesurer la
+                                    fréquentation, dans le but d'améliorer l'impact
+                                    de notre événement caritatif. Ces données
+                                    anonymes nous aident à convaincre de futurs
+                                    partenaires de nous soutenir.
+                                    </p>
                                 </div>
-                            </label>
-                        </div>
-          
-                    </label>
-                    <div className='flex justify-center p-2'>
-                        <span
-                            onClick={handleCustom}
-                            id="customValidationButton"
-                            role="button"
-                            className='flex-1 p-2 m-1 text-center text-black duration-300 rounded-lg shadow-sm cursor-pointer bg-mediumseagreen/50 hover:bg-mediumseagreen/70 hover:shadow-lg'
-                            aria-label={'Refuser tout les cookies'}
-                        >
-                            <FontAwesomeIcon icon={faCheck} className='mr-1' />
-                            <span>Valider</span>
-                        </span>
-                        <span
-                            onClick={handleOption}
-                            aria-label='Retour'
-                            role="button"
-                            className='flex-1 p-2 m-1 text-center text-black duration-300 border-2 rounded-lg cursor-pointer bg-gray-400/50 hover:bg-gray-400/70 hover:shadow-lg'
-                        >
-                            <FontAwesomeIcon icon={faGear} className='mr-1' />
-                            <span>Retour</span>
-                        </span>
-                    </div>
+                                <div className="flex justify-center px-2 max-sm:flex-col">
+                                    <Button
+                                        label="Accepter"
+                                        icon={faCheck}
+                                        iconPosition="left"
+                                        className="max-sm:flex justify-center !bg-mediumseagreen/50 hover:!bg-mediumseagreen/70 active:!bg-mediumseagreen"
+                                        action={() => {
+                                            setCookies(false, Object.assign({}, ...cookieService.cookieList.map(({title})=>{ return {[title]: true};})));
+                                        }}
+                                    ></Button>
+                                    <Button
+                                        label="Refuser"
+                                        icon={faXmark}
+                                        iconPosition="left"
+                                        className="max-sm:flex justify-center !bg-red-400/50 hover:!bg-red-400/70 active:!bg-red-400"
+                                        action={() => {
+                                            setCookies(false, {});
+                                        }}
+                                    ></Button>
+                                    <Button
+                                        label="Choisir"
+                                        icon={faGear}
+                                        iconPosition="left"
+                                        className="max-sm:flex justify-center !bg-slate-200 hover:!bg-slate-300/70 active:!bg-slate-300"
+                                        action={() => {
+                                            updateState({isPending: true, mode: 'complex', selectedCookies: {}});
+                                        }}
+                                    ></Button>
+                                </div>
+                                <Link className='block w-full pb-2 text-center text-blue-500 underline hover:text-blue-300' to={{pathname: '/cookies'}}>En savoir plus</Link>
+                            </>
+                        )}
+                    {state.mode === 'complex' && (
+                        <>
+                            <ul data-body-complex className="w-screen max-w-full px-5 py-3">
+                                {
+                                    cookieService.cookieList.map(({title, description})=> {
+                                        return <label key={`${title}-item`} className={'px-3 py-2 [&>[data-detail-content]]:has-[*[data-detail-toggler]:checked]:block'} htmlFor={title}>
+                                            <div className='flex items-center justify-between'>
+                                                <span>{title}</span>
+                                                <div className='flex items-center'>
+                                                    <div className="flex justify-between w-auto">
+                                                        <Switch onChange={ (event) => { updateCookie(event); } } htmlFor={title}></Switch>
+                                                    </div>
+                                                    <label htmlFor={`${title}Detail`} className='ml-3'>
+                                                        <input type="checkbox" data-detail-toggler className='hidden peer' id={`${title}Detail`} />
+                                                        <FontAwesomeIcon icon={faChevronDown} className='duration-100 -rotate-90 peer-checked:-rotate-0'></FontAwesomeIcon>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <p data-detail-content className="hidden px-3 max-w-96">
+                                                {description}
+                                            </p>
+                                        </label>;
+                                    })
+                                }
+                            </ul>
+                            <div className="flex justify-center p-2 pt-0 max-sm:flex-col">
+                                <Button
+                                    label="Valider"
+                                    icon={faCheck}
+                                    iconPosition="left"
+                                    className="max-sm:flex justify-center !bg-mediumseagreen/50 hover:!bg-mediumseagreen/70 active:!bg-mediumseagreen"
+                                    action={() => {
+                                        setCookies(false, state.selectedCookies);
+                                    }}
+                                ></Button>
+                                <Button
+                                    label="Retour"
+                                    icon={faUndo}
+                                    iconPosition="left"
+                                    className="max-sm:flex justify-center !bg-slate-200 hover:!bg-slate-300/70 active:!bg-slate-300"
+                                    action={() => {
+                                        updateState({isPending: true, mode: 'simple', selectedCookies: {}});
+                                    }}
+                                ></Button>
+                            </div>
+                        </>
+                    )}
                 </div>
-                {/* Buttons */}
-                <div className={`flex justify-center p-2 ${isOptionSelected ? 'hidden' : 'block'}`}>
-                    <span
-                        onClick={handleAccept}
-                        aria-label='Accepter tout les cookies'
-                        role="button"
-                        className='flex-1 p-2 m-1 text-center text-black duration-300 rounded-lg shadow-sm cursor-pointer bg-mediumseagreen/50 hover:bg-mediumseagreen/70 hover:shadow-lg'
-                    >
-                        <FontAwesomeIcon icon={faCheck} className='mr-1 max-sm:block max-sm:mx-auto' />
-                        <span aria-hidden="true">Accepter</span>
-                    </span>
-                    <span
-                        onClick={handleDeny}
-                        aria-label='Refuser tout les cookies'
-                        role="button"
-                        className='flex-1 p-2 m-1 text-center text-black duration-300 rounded-lg shadow-sm cursor-pointer bg-red-400/50 hover:bg-red-400/70 hover:shadow-lg'
-                    >
-                        <FontAwesomeIcon icon={faXmark} className='mr-1 max-sm:block max-sm:mx-auto' />
-                        <span aria-hidden="true">Refuser</span>
-                    </span>
-                    <span
-                        onClick={handleOption}
-                        aria-label='Choisir les cookies autorisé'
-                        role="button"
-                        className='flex-1 p-2 m-1 text-center text-black duration-300 border-2 rounded-lg cursor-pointer bg-gray-400/50 hover:bg-gray-400/70 hover:shadow-lg'
-                    >
-                        <FontAwesomeIcon icon={faGear} className='mr-1 max-sm:block max-sm:mx-auto' />
-                        <span aria-hidden="true">Choisir</span>
-                    </span>
-                </div>
-            </div>
-        </div>)
+            ) : (
+                <FontAwesomeIcon
+                    onClick={() => {
+                        cookieService.invalidate();
+                        updateState({isPending: true, mode: 'simple', selectedCookies: {}});
+                    }}
+                    icon={faCookieBite}
+                    className='fixed z-50 p-2 text-2xl rounded-full bg-amber-300 left-5 bottom-5'
+                />
+            )}
+        </>
     );
 }
